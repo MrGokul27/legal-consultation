@@ -1,0 +1,513 @@
+.auth-body {
+  min-height: 100vh;
+  background-color: var(--primary-dark);
+  color: var(--text-dark);
+  font-family: var(--font-body);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* ── 1. Layout Container ─────────────────────────────────────────────────── */
+.auth-layout {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* ── 2. Left Brand & Jurisprudence Panel ─────────────────────────────────── */
+.auth-panel-left {
+  width: 45%;
+  flex-shrink: 0;
+  background: linear-gradient(145deg, #040912 0%, #0b1a30 50%, #102444 100%);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 3.5rem 3.5rem;
+  overflow: hidden;
+  border-right: 1px solid var(--border-gold);
+}
+
+.auth-panel-left::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at 20% 30%,
+      rgba(197, 160, 89, 0.15) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at 80% 80%,
+      rgba(11, 26, 48, 0.8) 0%,
+      transparent 70%
+    );
+  pointer-events: none;
+}
+
+input[type="password"]::-ms-reveal {
+  display: none;
+}
+
+/* Subtle Scales Watermark */
+.auth-panel-left::after {
+  content: "\f24e";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  position: absolute;
+  right: -30px;
+  bottom: -30px;
+  font-size: 16rem;
+  color: rgba(197, 160, 89, 0.04);
+  pointer-events: none;
+}
+
+.auth-brand-wrap {
+  position: relative;
+  z-index: 2;
+}
+
+.auth-panel-logo {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+}
+
+.auth-panel-content {
+  position: relative;
+  z-index: 2;
+  margin: auto 0;
+  padding: 2rem 0;
+}
+
+.auth-panel-title {
+  color: #ffffff;
+  font-size: clamp(2rem, 3.2vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 1.25rem;
+}
+
+.auth-panel-desc {
+  color: #cbd5e1;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  max-width: 480px;
+  margin-bottom: 2rem;
+}
+
+.auth-feature-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.auth-feature-item {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  color: #e2e8f0;
+  font-size: 0.95rem;
+}
+.auth-feature-item i {
+  color: var(--accent-gold);
+  font-size: 1.1rem;
+}
+
+.auth-stats-box {
+  display: flex;
+  gap: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.auth-stat-col h4 {
+  color: var(--accent-gold);
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 0.2rem;
+}
+.auth-stat-col p {
+  color: #94a3b8;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0;
+}
+
+.auth-panel-footer {
+  position: relative;
+  z-index: 2;
+  color: #94a3b8;
+  font-size: 0.8rem;
+}
+
+/* ── 3. Right Form Panel ─────────────────────────────────────────────────── */
+.auth-panel-right {
+  flex-grow: 1;
+  background-color: #081220;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 2rem;
+  position: relative;
+  overflow-y: auto;
+}
+
+/* Back to Home Button */
+.auth-back-home {
+  position: absolute;
+  top: 2rem;
+  right: 2.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(197, 160, 89, 0.35);
+  color: #f1f5f9 !important;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.55rem 1.25rem;
+  border-radius: 50px;
+  transition: var(--transition-smooth);
+  text-decoration: none;
+  z-index: 10;
+}
+.auth-back-home:hover {
+  background: var(--accent-gold);
+  color: var(--primary-dark) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px var(--gold-glow);
+}
+
+.auth-card-inner {
+  width: 100%;
+  max-width: 500px;
+  background: rgba(15, 34, 63, 0.8);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-lg);
+  padding: 3rem 2.8rem;
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.4),
+    0 0 25px rgba(197, 160, 89, 0.12);
+  margin: 4rem auto 2rem;
+}
+
+.auth-card-header {
+  text-align: center;
+  margin-bottom: 2.2rem;
+}
+.auth-card-header h2 {
+  color: #ffffff;
+  font-size: 1.85rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+.auth-card-header p {
+  color: #94a3b8;
+  font-size: 0.9rem;
+  margin-bottom: 0;
+}
+
+/* Form Controls */
+.auth-form-group {
+  margin-bottom: 1.4rem;
+  position: relative;
+}
+
+.auth-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #cbd5e1;
+  margin-bottom: 0.45rem;
+}
+
+.auth-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.auth-input-icon {
+  position: absolute;
+  left: 1.1rem;
+  color: var(--accent-gold);
+  font-size: 0.95rem;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.auth-form-control {
+  width: 100%;
+  background: rgba(6, 14, 26, 0.85);
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-sm);
+  color: #ffffff;
+  padding: 0.8rem 1rem 0.8rem 2.8rem;
+  font-size: 0.95rem;
+  transition: var(--transition-smooth);
+}
+.auth-form-control:focus {
+  background: rgba(6, 14, 26, 0.95);
+  border-color: var(--accent-gold);
+  color: #ffffff;
+  box-shadow: 0 0 0 3px var(--gold-glow);
+  outline: none;
+}
+.auth-form-control::placeholder {
+  color: #64748b;
+}
+
+/* Select Dropdown */
+select.auth-form-control {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23c5a059' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: calc(100% - 1.1rem) center;
+  cursor: pointer;
+}
+select.auth-form-control option {
+  background-color: var(--primary-dark);
+  color: #ffffff;
+  padding: 8px;
+}
+
+/* Password Visibility Toggle */
+.auth-toggle-pw {
+  position: absolute;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 0.95rem;
+  cursor: pointer;
+  z-index: 3;
+  padding: 0;
+  transition: var(--transition-smooth);
+}
+.auth-toggle-pw:hover {
+  color: var(--accent-gold);
+}
+
+/* Validation Feedback Messages */
+.auth-error-msg {
+  display: none;
+  color: #f87171;
+  font-size: 0.78rem;
+  font-weight: 600;
+  margin-top: 0.35rem;
+  line-height: 1.4;
+}
+.auth-error-msg.visible {
+  display: block;
+  animation: fadeIn 0.25s ease;
+}
+
+.auth-hint-msg {
+  display: block;
+  color: #94a3b8;
+  font-size: 0.75rem;
+  margin-top: 0.3rem;
+}
+
+.auth-form-control.is-invalid {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.25) !important;
+}
+
+.auth-form-control.is-valid {
+  border-color: #10b981 !important;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.25) !important;
+}
+
+/* ── 4. Password Strength Meter ─────────────────────────────────────────── */
+.pw-strength-meter {
+  margin-top: 0.6rem;
+}
+
+.pw-strength-bar-bg {
+  width: 100%;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.4rem;
+}
+
+.pw-strength-fill {
+  height: 100%;
+  width: 0%;
+  transition:
+    width 0.35s ease,
+    background-color 0.35s ease;
+  border-radius: 4px;
+}
+
+.pw-strength-fill.weak {
+  width: 25%;
+  background-color: #ef4444;
+}
+.pw-strength-fill.fair {
+  width: 50%;
+  background-color: #f59e0b;
+}
+.pw-strength-fill.good {
+  width: 75%;
+  background-color: #3b82f6;
+}
+.pw-strength-fill.strong {
+  width: 100%;
+  background-color: #10b981;
+}
+
+.pw-strength-feedback {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.pw-strength-label.weak {
+  color: #ef4444;
+  font-weight: 700;
+}
+.pw-strength-label.fair {
+  color: #f59e0b;
+  font-weight: 700;
+}
+.pw-strength-label.good {
+  color: #3b82f6;
+  font-weight: 700;
+}
+.pw-strength-label.strong {
+  color: #10b981;
+  font-weight: 700;
+}
+
+.pw-rules-checklist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.8rem;
+  margin-top: 0.45rem;
+  font-size: 0.72rem;
+  color: #64748b;
+}
+.pw-rule-item.passed {
+  color: #10b981;
+}
+.pw-rule-item.passed i {
+  color: #10b981;
+}
+
+/* ── 5. Checkboxes (Remember Me & Terms) ─────────────────────────────────── */
+.auth-checkbox-wrap {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  margin-bottom: 1.4rem;
+  font-size: 0.85rem;
+  color: #cbd5e1;
+}
+.auth-checkbox-wrap input[type="checkbox"] {
+  accent-color: var(--accent-gold);
+  width: 17px;
+  height: 17px;
+  margin-top: 2px;
+  cursor: pointer;
+}
+.auth-checkbox-wrap label {
+  cursor: pointer;
+  line-height: 1.4;
+}
+
+/* ── 6. Auth Action Buttons & Footers ────────────────────────────────────── */
+.btn-auth-submit {
+  width: 100%;
+  padding: 0.85rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1.5rem;
+}
+
+.auth-switch-prompt {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 0.88rem;
+  margin-bottom: 0;
+}
+.auth-switch-prompt a {
+  color: var(--accent-gold);
+  font-weight: 700;
+  text-decoration: none;
+  transition: var(--transition-smooth);
+}
+.auth-switch-prompt a:hover {
+  color: var(--accent-gold-hover);
+  text-decoration: underline;
+}
+
+/* Toast / Notification Alert */
+.auth-toast-alert {
+  display: none;
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  margin-bottom: 1.5rem;
+  animation: fadeIn 0.3s ease;
+}
+.auth-toast-alert.success {
+  display: block;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid #10b981;
+  color: #a7f3d0;
+}
+.auth-toast-alert.error {
+  display: block;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid #ef4444;
+  color: #fecaca;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── 7. Responsive Media Queries ────────────────────────────────────────── */
+@media (max-width: 991px) {
+  .auth-layout {
+    flex-direction: column;
+  }
+  .auth-panel-left {
+    display: none !important;
+  }
+  .auth-panel-right {
+    padding: 5rem 1.5rem 3rem;
+  }
+  .auth-back-home {
+    top: 1.5rem;
+    right: 1.5rem;
+  }
+  .auth-card-inner {
+    padding: 2.2rem 1.8rem;
+    margin-top: 1.5rem;
+  }
+}

@@ -1,0 +1,117 @@
+/* ── 1. Service Filter & Category Header ─────────────────────────────────── */
+.service-cat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.4rem;
+  border-radius: 50px;
+  background: #ffffff;
+  border: 1.5px solid var(--border-light);
+  color: var(--text-dark);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+.service-cat-pill:hover,
+.service-cat-pill.active {
+  background: var(--primary-navy);
+  color: var(--accent-gold);
+  border-color: var(--primary-navy);
+  box-shadow: 0 4px 15px rgba(11, 26, 48, 0.15);
+}
+
+/* ── 2. Service Deep Dive Cards ─────────────────────────────────────────── */
+.service-feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 1.25rem 0 1.75rem;
+}
+.service-feature-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 0.65rem;
+  font-size: 0.95rem;
+  color: var(--text-body);
+}
+.service-feature-list li i {
+  color: var(--accent-gold);
+  font-size: 0.85rem;
+}
+
+/* ── 3. Fee Structure Comparison Cards ───────────────────────────────────── */
+.pricing-fee-card {
+  background: #ffffff;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 2.5rem 2rem;
+  transition: var(--transition-smooth);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.pricing-fee-card.featured-fee {
+  background: var(--navy-surface);
+  border: 1.5px solid var(--accent-gold);
+  box-shadow: var(--shadow-dark-hover);
+  color: #ffffff;
+  transform: scale(1.03);
+}
+.pricing-fee-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--accent-gold);
+  box-shadow: var(--shadow-hover);
+}
+.pricing-fee-card.featured-fee:hover {
+  transform: scale(1.03) translateY(-8px);
+}
+
+.fee-badge-top {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--accent-gold);
+  color: var(--primary-dark);
+  font-weight: 800;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.35rem 1rem;
+  border-radius: 50px;
+}
+
+.fee-rate-display {
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--accent-gold);
+  margin: 1rem 0;
+  line-height: 1;
+}
+.fee-rate-display span {
+  font-size: 0.9rem;
+  font-family: var(--font-body);
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.pricing-fee-card.featured-fee .fee-rate-display span {
+  color: #94a3b8;
+}
+
+/* ── 4. Compliance Audit Checklist ───────────────────────────────────────── */
+.audit-check-box {
+  background: var(--bg-subtle);
+  border-left: 4px solid var(--accent-gold);
+  padding: 1.25rem 1.5rem;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin-bottom: 1rem;
+  transition: var(--transition-smooth);
+}
+.audit-check-box:hover {
+  background: #ffffff;
+  box-shadow: var(--shadow-card);
+  transform: translateX(6px);
+}

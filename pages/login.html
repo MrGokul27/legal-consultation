@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portal Login | Stackly Legal Consultation</title>
+    <meta
+      name="description"
+      content="Sign in to your Stackly Legal consultation portal. Access case records, court filings, and confidential solicitor correspondence."
+    />
+
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      type="image/webp"
+      href="../assets/images/logoStackly.webp"
+    />
+
+    <!-- Bootstrap 5.3 CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- FontAwesome 6 Icons CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+
+    <!-- Google Fonts: Cinzel & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Master Stylesheet & Dedicated Auth CSS -->
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+    <link rel="stylesheet" href="../assets/css/auth.css" />
+  </head>
+  <body class="auth-body">
+    <div class="auth-layout">
+      <!-- ── LEFT PRESTIGE PANEL ────────────────────────────────────────────── -->
+      <div class="auth-panel-left d-none d-lg-flex">
+        <!-- Top Branding -->
+        <div class="auth-brand-wrap">
+          <a
+            href="../index.html"
+            class="d-flex align-items-center gap-3 text-decoration-none"
+          >
+            <img
+              src="../assets/images/logoStackly.webp"
+              alt="Stackly Legal Consultation"
+              class="auth-panel-logo"
+            />
+          </a>
+        </div>
+
+        <!-- Main Mid Content -->
+        <div class="auth-panel-content">
+          <span class="legal-badge"
+            ><i class="fa-solid fa-lock"></i> Encrypted Legal Portal</span
+          >
+          <h1 class="auth-panel-title">
+            Secure Access to <br />
+            <span class="text-gold">Judicial Precedents &amp; Briefs.</span>
+          </h1>
+          <p class="auth-panel-desc">
+            Sign in to your client chambers dashboard to review case progress,
+            active court filings, escrow disbursements, and privileged partner
+            communications.
+          </p>
+
+          <div class="auth-feature-list">
+            <div class="auth-feature-item">
+              <i class="fa-solid fa-shield-halved"></i>
+              <span>Protected under Legal Professional Privilege (LPP)</span>
+            </div>
+            <div class="auth-feature-item">
+              <i class="fa-solid fa-scale-balanced"></i>
+              <span>SRA Authorized &amp; Regulated Chambers (#589214)</span>
+            </div>
+            <div class="auth-feature-item">
+              <i class="fa-solid fa-key"></i>
+              <span>256-Bit Hardware Encryption for Evidentiary Files</span>
+            </div>
+          </div>
+
+          <div class="auth-stats-box">
+            <div class="auth-stat-col">
+              <h4>£1.4B+</h4>
+              <p>Advised Deals</p>
+            </div>
+            <div class="auth-stat-col">
+              <h4>98.4%</h4>
+              <p>Verdict Success</p>
+            </div>
+            <div class="auth-stat-col">
+              <h4>30+ Yrs</h4>
+              <p>London Heritage</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Panel Footer -->
+        <div
+          class="auth-panel-footer d-flex justify-content-between align-items-center"
+        >
+          <span>45 Bedford Row, Holborn, London WC1R 4LL, UK</span>
+          <span>Hotline: +91 9876543210</span>
+        </div>
+      </div>
+
+      <!-- ── RIGHT AUTHENTICATION FORM PANEL ────────────────────────────────── -->
+      <div class="auth-panel-right">
+        <!-- Requirement 9: Back to Home Button -->
+        <a href="../index.html" class="auth-back-home">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span>Back to Home</span>
+        </a>
+
+        <div class="auth-card-inner">
+          <!-- Toast Notification Alert -->
+          <div id="loginToastAlert" class="auth-toast-alert"></div>
+
+          <div class="auth-card-header">
+            <span class="legal-badge mb-2"
+              ><i class="fa-solid fa-user-shield"></i> Chambers Login</span
+            >
+            <h2>Sign In to Portal</h2>
+            <p>Enter your verified credentials to access legal records</p>
+          </div>
+
+          <form id="loginForm" novalidate>
+            <!-- 1. Role Field (Required) -->
+            <div class="auth-form-group">
+              <label for="loginRole" class="auth-label"
+                >Legal Authorization Role *</label
+              >
+              <div class="auth-input-wrap">
+                <i class="fa-solid fa-id-badge auth-input-icon"></i>
+                <select
+                  id="loginRole"
+                  class="form-select auth-form-control"
+                  required
+                >
+                  <option value="" selected disabled>
+                    Select your role...
+                  </option>
+                  <option value="corporate-counsel">
+                    Corporate General Counsel / Client
+                  </option>
+                  <option value="managing-partner">
+                    Senior Managing Partner / KC Barrister
+                  </option>
+                  <option value="associate-solicitor">
+                    Associate Solicitor / Legal Consultant
+                  </option>
+                  <option value="compliance-officer">
+                    Compliance &amp; Data Protection Officer
+                  </option>
+                </select>
+              </div>
+              <div id="loginRoleErr" class="auth-error-msg">
+                Please select your legal authorization role.
+              </div>
+            </div>
+
+            <!-- 2. Email Field (Required) -->
+            <div class="auth-form-group">
+              <label for="loginEmail" class="auth-label"
+                >Corporate Email Address *</label
+              >
+              <div class="auth-input-wrap">
+                <i class="fa-solid fa-envelope auth-input-icon"></i>
+                <input
+                  type="email"
+                  id="loginEmail"
+                  class="form-control auth-form-control"
+                  placeholder="counsel@enterprise.co.uk"
+                  required
+                />
+              </div>
+              <div id="loginEmailErr" class="auth-error-msg">
+                Corporate email address is required.
+              </div>
+            </div>
+
+            <!-- 3. Password Field (Required + Weak Password Validation) -->
+            <div class="auth-form-group">
+              <div
+                class="d-flex justify-content-between align-items-center mb-1"
+              >
+                <label for="loginPassword" class="auth-label mb-0"
+                  >Password *</label
+                >
+                <a href="#" class="text-gold fs-8 text-decoration-none"
+                  >Reset Access?</a
+                >
+              </div>
+              <div class="auth-input-wrap">
+                <i class="fa-solid fa-lock auth-input-icon"></i>
+                <input
+                  type="password"
+                  id="loginPassword"
+                  class="form-control auth-form-control"
+                  placeholder="••••••••••••"
+                  required
+                />
+                <button
+                  type="button"
+                  class="auth-toggle-pw"
+                  aria-label="Toggle password visibility"
+                >
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+              </div>
+              <!-- Weak Password Validation Meter -->
+              <div class="pw-strength-meter">
+                <div class="pw-strength-bar-bg">
+                  <div id="loginPwFill" class="pw-strength-fill"></div>
+                </div>
+                <div class="pw-strength-feedback">
+                  <span>Password Strength:</span>
+                  <span id="loginPwLabel" class="pw-strength-label"></span>
+                </div>
+                <div id="loginPwRules" class="pw-rules-checklist">
+                  <span class="pw-rule-item" data-rule="len"
+                    ><i class="fa-solid fa-check"></i> 8+ chars</span
+                  >
+                  <span class="pw-rule-item" data-rule="upper"
+                    ><i class="fa-solid fa-check"></i> Uppercase</span
+                  >
+                  <span class="pw-rule-item" data-rule="num"
+                    ><i class="fa-solid fa-check"></i> Number</span
+                  >
+                  <span class="pw-rule-item" data-rule="special"
+                    ><i class="fa-solid fa-check"></i> Symbol</span
+                  >
+                </div>
+              </div>
+              <div id="loginPasswordErr" class="auth-error-msg">
+                Password is required.
+              </div>
+            </div>
+
+            <!-- 4. Remember Me Checkbox (Required) -->
+            <div class="auth-checkbox-wrap">
+              <input type="checkbox" id="loginRememberMe" required />
+              <label for="loginRememberMe">
+                Remember me on this encrypted workstation *
+              </label>
+            </div>
+            <div
+              id="loginRememberMeErr"
+              class="auth-error-msg mb-3"
+              style="margin-top: -0.8rem"
+            >
+              You must check Remember Me to confirm your workstation security.
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-gold btn-auth-submit">
+              <i class="fa-solid fa-arrow-right-to-bracket me-2"></i
+              >Authenticate &amp; Sign In
+            </button>
+
+            <!-- Prompt Switch to Register -->
+            <p class="auth-switch-prompt">
+              Do not have a client portal account?
+              <a href="register.html">Register New Profile &rarr;</a>
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap 5.3 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Dedicated Auth Script -->
+    <script src="../assets/js/auth.js"></script>
+  </body>
+</html>

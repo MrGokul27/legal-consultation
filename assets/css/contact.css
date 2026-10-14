@@ -1,0 +1,114 @@
+/* ── 1. Contact Channel Cards ────────────────────────────────────────────── */
+.contact-channel-card {
+  background: #ffffff;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 2.2rem 1.8rem;
+  text-align: center;
+  box-shadow: var(--shadow-card);
+  transition: var(--transition-smooth);
+  height: 100%;
+}
+.contact-channel-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--accent-gold);
+  box-shadow: var(--shadow-hover);
+}
+.contact-icon-bubble {
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  background: var(--accent-gold-light);
+  color: var(--accent-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  margin: 0 auto 1.25rem;
+  transition: var(--transition-smooth);
+}
+.contact-channel-card:hover .contact-icon-bubble {
+  background: var(--accent-gold);
+  color: var(--primary-dark);
+  transform: scale(1.1);
+}
+
+/* ── 2. Confidential Consultation Booking Form ───────────────────────────── */
+.consultation-form-card {
+  background: #ffffff;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 3rem;
+  box-shadow: var(--shadow-hover);
+}
+@media (max-width: 767px) {
+  .consultation-form-card {
+    padding: 1.8rem;
+  }
+}
+
+.legal-form-label {
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-dark);
+  margin-bottom: 0.4rem;
+}
+
+.legal-form-control {
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  transition: var(--transition-smooth);
+}
+.legal-form-control:focus {
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 0 3px var(--gold-glow);
+  outline: none;
+}
+
+/* ── 3. Emergency Injunction Banner ──────────────────────────────────────── */
+.emergency-hotline-bar {
+  background: linear-gradient(135deg, #1f0b0b 0%, #3d1414 100%);
+  border: 1.5px solid #ef4444;
+  border-radius: var(--radius-md);
+  padding: 2rem;
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
+}
+.emergency-hotline-bar .btn-emergency {
+  background: #ef4444;
+  color: #ffffff;
+  font-weight: 800;
+  border: none;
+  padding: 0.75rem 1.75rem;
+  border-radius: var(--radius-sm);
+  transition: var(--transition-smooth);
+}
+.emergency-hotline-bar .btn-emergency:hover {
+  background: #dc2626;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);
+}
+
+/* ── 4. Map & Directions Card ────────────────────────────────────────────── */
+.london-office-map-card {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-card);
+  background: #ffffff;
+}
+.transit-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--bg-subtle);
+  padding: 0.35rem 0.8rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 600;
+}

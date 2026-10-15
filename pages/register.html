@@ -147,9 +147,10 @@
                 <input
                   type="text"
                   id="regUsername"
+                  name="username"
                   class="form-control auth-form-control"
                   placeholder="e.g. RichardHawthorne"
-                  autocomplete="off"
+                  autocomplete="username"
                   required
                 />
               </div>
@@ -172,7 +173,9 @@
                 <i class="fa-solid fa-id-badge auth-input-icon"></i>
                 <select
                   id="regRole"
+                  name="role"
                   class="form-select auth-form-control"
+                  autocomplete="off"
                   required
                 >
                   <option value="" selected disabled>
@@ -207,8 +210,10 @@
                 <input
                   type="email"
                   id="regEmail"
+                  name="email"
                   class="form-control auth-form-control"
                   placeholder="name@company.co.uk"
+                  autocomplete="email"
                   required
                 />
               </div>
@@ -227,8 +232,10 @@
                 <input
                   type="password"
                   id="regPassword"
+                  name="password"
                   class="form-control auth-form-control"
                   placeholder="••••••••••••"
+                  autocomplete="new-password"
                   required
                 />
                 <button
@@ -278,8 +285,10 @@
                 <input
                   type="password"
                   id="regConfirmPassword"
+                  name="confirmPassword"
                   class="form-control auth-form-control"
                   placeholder="••••••••••••"
+                  autocomplete="new-password"
                   required
                 />
                 <button
@@ -297,7 +306,13 @@
 
             <!-- 6. Terms & Conditions Checkbox (Required) -->
             <div class="auth-checkbox-wrap">
-              <input type="checkbox" id="regTerms" required />
+              <input
+                type="checkbox"
+                id="regTerms"
+                name="terms"
+                autocomplete="off"
+                required
+              />
               <label for="regTerms">
                 I agree to the
                 <a href="#" class="text-gold text-decoration-none fw-bold"

@@ -203,13 +203,16 @@
                   </h4>
                   <div class="row g-3">
                     <div class="col-md-6">
-                      <label class="legal-form-label">Full Legal Name *</label>
+                      <label for="contactName" class="legal-form-label"
+                        >Full Legal Name *</label
+                      >
                       <input
                         type="text"
                         id="contactName"
                         name="fullName"
                         class="form-control legal-form-control"
                         placeholder="e.g. Richard Hawthorne"
+                        autocomplete="name"
                         pattern="[A-Za-z\s]+"
                         maxlength="16"
                         title="Only alphabets and spaces are allowed"
@@ -230,7 +233,7 @@
                       />
                     </div>
                     <div class="col-md-6">
-                      <label class="legal-form-label"
+                      <label for="contactCompany" class="legal-form-label"
                         >Company / Entity Name *</label
                       >
                       <input
@@ -239,11 +242,12 @@
                         name="companyName"
                         class="form-control legal-form-control"
                         placeholder="e.g. Hawthorne Capital Ltd"
+                        autocomplete="organization"
                         required
                       />
                     </div>
                     <div class="col-md-6">
-                      <label class="legal-form-label"
+                      <label for="contactEmail" class="legal-form-label"
                         >Corporate Email Address *</label
                       >
                       <input
@@ -252,11 +256,12 @@
                         name="email"
                         class="form-control legal-form-control"
                         placeholder="name@company.co.uk"
+                        autocomplete="email"
                         required
                       />
                     </div>
                     <div class="col-md-6">
-                      <label class="legal-form-label"
+                      <label for="contactPhone" class="legal-form-label"
                         >Direct Contact Phone *</label
                       >
                       <input
@@ -265,6 +270,7 @@
                         name="phone"
                         class="form-control legal-form-control"
                         placeholder="e.g. 02079460123"
+                        autocomplete="tel"
                         inputmode="numeric"
                         pattern="[0-9]+"
                         minlength="10"
@@ -285,13 +291,14 @@
                       />
                     </div>
                     <div class="col-md-6">
-                      <label class="legal-form-label"
+                      <label for="contactSpecialism" class="legal-form-label"
                         >Practice Specialism *</label
                       >
                       <select
                         class="form-select legal-form-control"
                         id="contactSpecialism"
                         name="practiceSpecialism"
+                        autocomplete="off"
                         required
                       >
                         <option value="" selected disabled>
@@ -318,13 +325,14 @@
                       </select>
                     </div>
                     <div class="col-md-6">
-                      <label class="legal-form-label"
+                      <label for="contactUrgency" class="legal-form-label"
                         >Urgency Classification *</label
                       >
                       <select
                         class="form-select legal-form-control"
                         id="contactUrgency"
                         name="urgency"
+                        autocomplete="off"
                         required
                       >
                         <option value="" selected disabled>
@@ -342,7 +350,7 @@
                       </select>
                     </div>
                     <div class="col-12">
-                      <label class="legal-form-label"
+                      <label for="contactAdverse" class="legal-form-label"
                         >Adverse Parties (For Conflict Screening) *</label
                       >
                       <input
@@ -351,11 +359,12 @@
                         name="adverseParties"
                         class="form-control legal-form-control"
                         placeholder="List opposing individuals or corporate entities"
+                        autocomplete="off"
                         required
                       />
                     </div>
                     <div class="col-12">
-                      <label class="legal-form-label"
+                      <label for="contactMatter" class="legal-form-label"
                         >Matter Summary / Key Facts *</label
                       >
                       <textarea
@@ -364,6 +373,7 @@
                         class="form-control legal-form-control"
                         rows="4"
                         placeholder="Briefly describe the contractual dispute, acquisition target, or pending litigation..."
+                        autocomplete="off"
                         required
                       ></textarea>
                     </div>

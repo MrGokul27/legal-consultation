@@ -176,12 +176,22 @@
 
             <div class="search-box-input" style="max-width: 300px; width: 100%">
               <div class="input-group">
+                <label for="blogSearchInput" class="visually-hidden"
+                  >Search legal precedents</label
+                >
                 <input
-                  type="text"
+                  type="search"
+                  id="blogSearchInput"
+                  name="searchQuery"
                   class="form-control form-control-sm"
                   placeholder="Search legal precedents..."
+                  autocomplete="off"
                 />
-                <button class="btn btn-gold btn-sm" type="button">
+                <button
+                  class="btn btn-gold btn-sm"
+                  type="button"
+                  aria-label="Search precedents"
+                >
                   <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
               </div>
@@ -681,10 +691,16 @@
                 window.location.href = '../404.html';
               "
             >
+              <label for="blogNewsletterEmail" class="visually-hidden"
+                >Work email address</label
+              >
               <input
                 type="email"
+                id="blogNewsletterEmail"
+                name="newsletterEmail"
                 class="form-control"
                 placeholder="Work email address"
+                autocomplete="email"
                 required
               />
               <button

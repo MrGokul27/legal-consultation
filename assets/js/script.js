@@ -292,7 +292,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 <h6 class="text-white mb-2 fs-7 text-uppercase fw-bold">Legal Briefing Dispatch</h6>
                 <p class="text-white-50 fs-8 mb-2">Receive curated statutory alerts and landmark High Court analysis directly.</p>
                 <form class="newsletter-form d-flex gap-2" id="footerNewsletterForm" onsubmit="event.preventDefault(); const inPages = window.location.pathname.toLowerCase().includes('/pages/'); window.location.href = inPages ? '../404.html' : '404.html';">
-                  <input type="email" class="form-control form-control-sm newsletter-input" placeholder="Work email address" required>
+                  <label for="footerNewsletterEmail" class="visually-hidden">Work email address</label>
+                  <input type="email" id="footerNewsletterEmail" name="newsletterEmail" class="form-control form-control-sm newsletter-input" placeholder="Work email address" autocomplete="email" required>
                   <button type="submit" class="btn btn-gold btn-sm px-3" aria-label="Subscribe to legal newsletter"><i class="fa-solid fa-paper-plane"></i></button>
                 </form>
               </div>

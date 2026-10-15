@@ -663,8 +663,8 @@
 
                   <!-- Interactive Practice Area Quick Filter Pills -->
                   <div class="mb-3">
-                    <label class="intake-field-label"
-                      >Quick Select Practice Area:</label
+                    <span class="intake-field-label d-block mb-2"
+                      >Quick Select Practice Area:</span
                     >
                     <div class="hero-pill-selector" id="heroPillSelector">
                       <button
@@ -703,6 +703,9 @@
                   <!-- Intake Form -->
                   <form id="heroQuickForm" action="404.html">
                     <div class="form-group-wrap mb-3">
+                      <label for="heroName" class="visually-hidden"
+                        >Full Legal / Corporate Name</label
+                      >
                       <span class="input-icon"
                         ><i class="fa-solid fa-user-tie"></i
                       ></span>
@@ -712,6 +715,7 @@
                         id="heroName"
                         name="fullName"
                         placeholder="Full Legal / Corporate Name"
+                        autocomplete="name"
                         pattern="[A-Za-z\s]+"
                         maxlength="16"
                         title="Only alphabets and spaces are allowed"
@@ -733,6 +737,9 @@
                     </div>
 
                     <div class="form-group-wrap mb-3">
+                      <label for="heroEmail" class="visually-hidden"
+                        >Corporate / Direct Email</label
+                      >
                       <span class="input-icon"
                         ><i class="fa-solid fa-envelope"></i
                       ></span>
@@ -742,11 +749,15 @@
                         id="heroEmail"
                         name="email"
                         placeholder="Corporate / Direct Email"
+                        autocomplete="email"
                         required
                       />
                     </div>
 
                     <div class="form-group-wrap mb-3">
+                      <label for="heroPracticeSelect" class="visually-hidden"
+                        >Legal Practice Area</label
+                      >
                       <span class="input-icon"
                         ><i class="fa-solid fa-briefcase"></i
                       ></span>
@@ -754,6 +765,7 @@
                         class="form-select hero-select"
                         id="heroPracticeSelect"
                         name="practiceArea"
+                        autocomplete="off"
                         required
                       >
                         <option value="corporate" selected>
@@ -778,6 +790,9 @@
                     </div>
 
                     <div class="form-group-wrap mb-3">
+                      <label for="heroPhone" class="visually-hidden"
+                        >Direct Contact Number</label
+                      >
                       <span class="input-icon"
                         ><i class="fa-solid fa-phone"></i
                       ></span>
@@ -787,6 +802,7 @@
                         id="heroPhone"
                         name="phone"
                         placeholder="Direct Contact Number"
+                        autocomplete="tel"
                         inputmode="numeric"
                         minlength="10"
                         maxlength="10"
@@ -809,36 +825,45 @@
 
                     <!-- Urgency Level Selection -->
                     <div class="mb-3">
-                      <label class="intake-field-label"
-                        >Required Response Speed:</label
+                      <span class="intake-field-label d-block mb-2"
+                        >Required Response Speed:</span
                       >
                       <div class="hero-urgency-selector">
-                        <label class="urgency-option">
+                        <label class="urgency-option" for="heroUrgencyStandard">
                           <input
                             type="radio"
+                            id="heroUrgencyStandard"
                             name="heroUrgency"
                             value="standard"
+                            autocomplete="off"
                             checked
                             required
                           />
                           <span class="urgency-pill">Standard (24h)</span>
                         </label>
-                        <label class="urgency-option">
+                        <label class="urgency-option" for="heroUrgencyPriority">
                           <input
                             type="radio"
+                            id="heroUrgencyPriority"
                             name="heroUrgency"
                             value="priority"
+                            autocomplete="off"
                             required
                           />
                           <span class="urgency-pill priority"
                             >Priority (6h)</span
                           >
                         </label>
-                        <label class="urgency-option">
+                        <label
+                          class="urgency-option"
+                          for="heroUrgencyEmergency"
+                        >
                           <input
                             type="radio"
+                            id="heroUrgencyEmergency"
                             name="heroUrgency"
                             value="emergency"
+                            autocomplete="off"
                             required
                           />
                           <span class="urgency-pill emergency"
@@ -1855,12 +1880,16 @@
                 <form id="legalAssessmentForm">
                   <h4 class="text-white mb-3">Consultation Scope Calculator</h4>
                   <div class="mb-3">
-                    <label class="form-label text-white-50 fs-7"
+                    <label
+                      for="calcServiceType"
+                      class="form-label text-white-50 fs-7"
                       >Practice Domain</label
                     >
                     <select
                       id="calcServiceType"
+                      name="calcServiceType"
                       class="form-select bg-dark text-white border-secondary"
+                      autocomplete="off"
                       required
                     >
                       <option value="Commercial Dispute">
@@ -1886,12 +1915,16 @@
 
                   <div class="row g-3 mb-3">
                     <div class="col-md-6">
-                      <label class="form-label text-white-50 fs-7"
+                      <label
+                        for="calcUrgency"
+                        class="form-label text-white-50 fs-7"
                         >Urgency Level</label
                       >
                       <select
                         id="calcUrgency"
+                        name="calcUrgency"
                         class="form-select bg-dark text-white border-secondary"
+                        autocomplete="off"
                         required
                       >
                         <option value="standard">Standard (Within 24h)</option>
@@ -1904,12 +1937,16 @@
                       </select>
                     </div>
                     <div class="col-md-6">
-                      <label class="form-label text-white-50 fs-7"
+                      <label
+                        for="calcJurisdiction"
+                        class="form-label text-white-50 fs-7"
                         >Jurisdiction</label
                       >
                       <select
                         id="calcJurisdiction"
+                        name="calcJurisdiction"
                         class="form-select bg-dark text-white border-secondary"
+                        autocomplete="off"
                         required
                       >
                         <option value="England & Wales">

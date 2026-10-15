@@ -52,6 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <li class="nav-item"><a class="nav-link custom-nav-link" href="" data-page="portfolio">Case Studies</a></li>
               <li class="nav-item"><a class="nav-link custom-nav-link" href="" data-page="blog">Legal Insights</a></li>
               <li class="nav-item"><a class="nav-link custom-nav-link" href="" data-page="contact">Contact</a></li>
+              <li class="nav-item"><a class="nav-link custom-nav-link text-gold fw-semibold" href="" data-page="dashboard"><i class="fa-solid fa-chart-pie me-1"></i>Dashboard</a></li>
             </ul>
           </div>
           <div class="header-action-wrap d-flex align-items-center gap-3">
@@ -85,6 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <li><a href="" data-page="portfolio" class="mobile-nav-link"><i class="fa-solid fa-chevron-right me-2 text-gold"></i>Case Studies &amp; Track Record</a></li>
           <li><a href="" data-page="blog" class="mobile-nav-link"><i class="fa-solid fa-chevron-right me-2 text-gold"></i>Legal Insights &amp; Articles</a></li>
           <li><a href="" data-page="contact" class="mobile-nav-link"><i class="fa-solid fa-chevron-right me-2 text-gold"></i>Contact &amp; Location</a></li>
+          <li><a href="" data-page="dashboard" class="mobile-nav-link text-gold"><i class="fa-solid fa-gauge-high me-2 text-gold"></i>Chambers Dashboard</a></li>
           <li><a href="" data-page="login" class="mobile-nav-link text-gold"><i class="fa-solid fa-arrow-right-to-bracket me-2 text-gold"></i>Client Portal (Sign In)</a></li>
         </ul>
         <div class="mobile-nav-footer mt-4 pt-4 border-top border-secondary">

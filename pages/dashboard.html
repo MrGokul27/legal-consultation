@@ -1,0 +1,3301 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chambers Portal Dashboard | Stackly Legal Consultation</title>
+    <meta
+      name="description"
+      content="Role-based legal chambers dashboard for corporate general counsel, managing partners, solicitors, and compliance officers. Access privileged dockets, escrow accounts, and judicial filings."
+    />
+
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      type="image/webp"
+      href="../assets/images/logoStackly.webp"
+    />
+
+    <!-- Bootstrap 5.3 CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- FontAwesome 6 Icons CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+
+    <!-- Google Fonts: Cinzel & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Master Stylesheet & Dashboard Custom CSS -->
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+    <link rel="stylesheet" href="../assets/css/dashboard.css" />
+  </head>
+  <body class="dashboard-body">
+    <!-- Mobile Sidebar Backdrop Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="dashboard-wrapper">
+      <!-- ── 1. DYNAMIC ROLE-BASED SIDEBAR ────────────────────────────────────── -->
+      <aside class="dashboard-sidebar" id="dashboardSidebar">
+        <!-- Sidebar Brand Header -->
+        <div class="sidebar-header">
+          <a href="../index.html" class="sidebar-brand">
+            <img
+              src="../assets/images/logoStackly.webp"
+              alt="Stackly Legal Consultation"
+              class="sidebar-brand-logo"
+            />
+          </a>
+          <button
+            type="button"
+            class="sidebar-close-btn d-lg-none"
+            id="sidebarCloseBtn"
+            aria-label="Close sidebar"
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <!-- Authenticated User Profile Snapshot -->
+        <div class="sidebar-user-card">
+          <div class="sidebar-avatar" id="sidebarAvatar">SL</div>
+          <div class="sidebar-user-info">
+            <h6 class="sidebar-user-name" id="sidebarUserName">
+              Counsel Eleanor Vance
+            </h6>
+            <p class="sidebar-user-email" id="sidebarUserEmail">
+              counsel@enterprise.co.uk
+            </p>
+            <span class="sidebar-role-pill" id="sidebarUserRole"
+              >General Counsel</span
+            >
+          </div>
+        </div>
+
+        <!-- Dynamic Role Navigation List -->
+        <div class="dashboard-sidebar-nav">
+          <div class="sidebar-nav-section-title" id="sidebarNavTitle">
+            General Counsel Menus
+          </div>
+          <ul class="sidebar-nav-list" id="sidebarNavList">
+            <!-- Dynamically populated by dashboard.js based on active role -->
+          </ul>
+        </div>
+
+        <!-- Sidebar Security Footer -->
+        <div class="sidebar-footer">
+          <button
+            type="button"
+            class="btn-sidebar-logout btn-logout"
+            data-action="logout"
+            id="sidebarLogoutBtn"
+          >
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            <span>Sign Out of Portal</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- ── 2. MAIN DASHBOARD CONTENT AREA ───────────────────────────────────── -->
+      <main class="dashboard-main" id="dashboardMain">
+        <!-- Top Sticky Header Bar -->
+        <header class="dashboard-topbar">
+          <div class="topbar-left">
+            <button
+              type="button"
+              class="sidebar-toggle-btn d-lg-none"
+              id="mobileSidebarToggle"
+              aria-label="Toggle navigation"
+            >
+              <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="topbar-breadcrumb">
+              <span>Portal</span>
+              <i class="fa-solid fa-chevron-right fs-8"></i>
+              <span>Chambers</span>
+              <i class="fa-solid fa-chevron-right fs-8"></i>
+              <span class="active" id="topbarActiveBreadcrumb"
+                >Overview &amp; Retainers</span
+              >
+            </div>
+          </div>
+
+          <div class="topbar-right">
+            <!-- Fast Role Switcher Dropdown (Allows testing and previewing all 4 roles effortlessly) -->
+            <div class="dropdown role-switcher-dropdown">
+              <button
+                class="btn btn-role-switch dropdown-toggle"
+                type="button"
+                id="roleSwitchDropdownBtn"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="fa-solid fa-user-gear text-gold"></i>
+                <span
+                  >Role:
+                  <strong id="topbarRoleBadge">General Counsel</strong></span
+                >
+              </button>
+              <ul
+                class="dropdown-menu dropdown-menu-end"
+                aria-labelledby="roleSwitchDropdownBtn"
+              >
+                <li>
+                  <h6 class="dropdown-header text-gold font-heading">
+                    Switch Active Legal Role
+                  </h6>
+                </li>
+                <li>
+                  <button
+                    class="dropdown-item"
+                    type="button"
+                    data-role-switch="corporate-counsel"
+                  >
+                    <i class="fa-solid fa-building-columns"></i>
+                    <span>Corporate General Counsel / Client</span>
+                  </button>
+                </li>
+                <li>
+                  <button
+                    class="dropdown-item"
+                    type="button"
+                    data-role-switch="managing-partner"
+                  >
+                    <i class="fa-solid fa-gavel"></i>
+                    <span>Senior Managing Partner / KC Barrister</span>
+                  </button>
+                </li>
+                <li>
+                  <button
+                    class="dropdown-item"
+                    type="button"
+                    data-role-switch="associate-solicitor"
+                  >
+                    <i class="fa-solid fa-scale-balanced"></i>
+                    <span>Associate Solicitor / Legal Consultant</span>
+                  </button>
+                </li>
+                <li>
+                  <button
+                    class="dropdown-item"
+                    type="button"
+                    data-role-switch="compliance-officer"
+                  >
+                    <i class="fa-solid fa-shield-check"></i>
+                    <span>Compliance &amp; Data Protection Officer</span>
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            <!-- User Menu / Logout -->
+            <div class="dropdown user-dropdown">
+              <button
+                class="user-btn dropdown-toggle"
+                type="button"
+                id="userDropdownBtn"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <div class="user-avatar-sm" id="topbarAvatar">SL</div>
+                <span
+                  class="user-name-text fs-8 fw-semibold"
+                  id="topbarUserEmail"
+                  >counsel@enterprise.co.uk</span
+                >
+              </button>
+              <ul
+                class="dropdown-menu dropdown-menu-end"
+                aria-labelledby="userDropdownBtn"
+              >
+                <li>
+                  <h6 class="dropdown-header text-gold">Chambers Session</h6>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="login.html">
+                    <i class="fa-solid fa-user-pen me-2 text-gold"></i>Switch
+                    Credentials
+                  </a>
+                </li>
+                <li><hr class="dropdown-divider border-secondary" /></li>
+                <li>
+                  <button
+                    class="dropdown-item text-danger btn-logout"
+                    type="button"
+                    data-action="logout"
+                  >
+                    <i class="fa-solid fa-arrow-right-from-bracket me-2"></i
+                    >Sign Out
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </header>
+
+        <!-- Dashboard Body Content -->
+        <div class="dashboard-content-body">
+          <!-- ── Authenticated Session Greeting Banner ────────────────────────── -->
+          <div class="auth-session-banner">
+            <h2 class="banner-title">
+              Welcome to Chambers,
+              <span class="text-gold" id="bannerDisplayName"
+                >Counsel Eleanor Vance</span
+              >
+            </h2>
+            <p class="banner-subtitle">
+              Session authorized under Legal Professional Privilege (LPP). All
+              evidentiary briefs, billing vouchers, and courtroom transcripts
+              are synchronized with Royal Courts of Justice registers.
+            </p>
+            <div class="session-metadata-pills">
+              <div class="session-pill">
+                <i class="fa-solid fa-envelope"></i>
+                <span
+                  >Email:
+                  <strong id="bannerUserEmail"
+                    >counsel@enterprise.co.uk</strong
+                  ></span
+                >
+              </div>
+              <div class="session-pill">
+                <i class="fa-solid fa-user-shield"></i>
+                <span
+                  >Role:
+                  <strong id="bannerRoleName"
+                    >Corporate General Counsel / Client</strong
+                  ></span
+                >
+              </div>
+              <div class="session-pill">
+                <i class="fa-solid fa-clock"></i>
+                <span
+                  >Authenticated:
+                  <strong id="bannerLoginTime"
+                    >15 Oct 2026, 09:58 AM GMT</strong
+                  ></span
+                >
+              </div>
+              <div class="session-pill" id="bannerSecurityPill">
+                <i class="fa-solid fa-lock text-gold me-1"></i>
+                <span>SRA Encrypted LPP Session (#589214)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── ALL 20 ORIGINAL ROLE-BASED CONTENT PANES ──────────────────────── -->
+          <div id="dashboardViewsContainer">
+            <!-- =================================================================
+                 ROLE 1: CORPORATE GENERAL COUNSEL / CLIENT (5 Views)
+                 ================================================================= -->
+
+            <!-- View 1.1: Counsel Overview & Retainers -->
+            <div class="dashboard-view-pane active" id="view-counsel-overview">
+              <div class="view-section-header">
+                <h3 class="view-section-title">
+                  Corporate Retainer &amp; Litigation Overview
+                </h3>
+                <p class="view-section-desc">
+                  Executive summary of enterprise legal retainers, outside
+                  counsel spend, and pending court milestones.
+                </p>
+              </div>
+
+              <!-- Metric Stat Cards (Equal Height) -->
+              <div class="row g-4 mb-4">
+                <div class="col-12 col-sm-6 col-xl-3">
+                  <div class="stat-card-widget">
+                    <div class="stat-widget-content">
+                      <span class="stat-widget-label">Active Litigations</span>
+                      <div class="stat-widget-value">6 Matters</div>
+                      <span class="stat-widget-note text-emerald"
+                        ><i class="fa-solid fa-arrow-trend-up me-1"></i>3 High
+                        Court, 2 LCIA</span
+                      >
+                    </div>
+                    <div class="stat-widget-icon">
+                      <i class="fa-solid fa-scale-balanced"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-6 col-xl-3">
+                  <div class="stat-card-widget">
+                    <div class="stat-widget-content">
+                      <span class="stat-widget-label">SRA Escrow Balance</span>
+                      <div class="stat-widget-value">£420,000</div>
+                      <span class="stat-widget-note text-gold"
+                        ><i class="fa-solid fa-shield-halved me-1"></i
+                        >Segregated Client Trust</span
+                      >
+                    </div>
+                    <div class="stat-widget-icon">
+                      <i class="fa-solid fa-sack-dollar"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-6 col-xl-3">
+                  <div class="stat-card-widget">
+                    <div class="stat-widget-content">
+                      <span class="stat-widget-label">YTD Counsel Spend</span>
+                      <div class="stat-widget-value">£184,500</div>
+                      <span class="stat-widget-note text-emerald"
+                        ><i class="fa-solid fa-circle-check me-1"></i>84% of
+                        annual budget cap</span
+                      >
+                    </div>
+                    <div class="stat-widget-icon">
+                      <i class="fa-solid fa-file-invoice-dollar"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-6 col-xl-3">
+                  <div class="stat-card-widget">
+                    <div class="stat-widget-content">
+                      <span class="stat-widget-label">Upcoming Hearings</span>
+                      <div class="stat-widget-value">2 Hearings</div>
+                      <span class="stat-widget-note text-gold"
+                        ><i class="fa-solid fa-calendar me-1"></i>Next: 24 Oct
+                        (Rolls Building)</span
+                      >
+                    </div>
+                    <div class="stat-widget-icon">
+                      <i class="fa-solid fa-gavel"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Active Matters Table -->
+              <div class="legal-card mb-4">
+                <div class="legal-card-header">
+                  <div>
+                    <h4 class="legal-card-title">
+                      <i class="fa-solid fa-folder-open"></i> Active Enterprise
+                      Matters &amp; Judicial Dockets
+                    </h4>
+                    <span class="legal-card-subtitle"
+                      >Court listings, assigned silks, and procedural
+                      milestones</span
+                    >
+                  </div>
+                  <button
+                    type="button"
+                    class="btn btn-outline-gold btn-sm-action"
+                  >
+                    <i class="fa-solid fa-file-arrow-down me-1"></i> Export
+                    Matter Dossier
+                  </button>
+                </div>
+                <div class="legal-card-body p-0">
+                  <div class="table-responsive">
+                    <table class="legal-table">
+                      <thead>
+                        <tr>
+                          <th>Matter ID</th>
+                          <th>Case Title &amp; Adversary</th>
+                          <th>Jurisdiction / Court</th>
+                          <th>Lead KC Silk</th>
+                          <th>Next Procedural Deadline</th>
+                          <th>Privilege Tier</th>
+                          <th>Current Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="fw-bold text-gold">#MAT-2026-881</td>
+                          <td>
+                            <strong
+                              >Meridian Logistics PLC v. Thames Gateway
+                              Ports</strong
+                            >
+                            <div class="text-dim fs-8">
+                              Commercial breach of concession contract (£14.5M
+                              claim)
+                            </div>
+                          </td>
+                          <td>Commercial Court (Rolls Building)</td>
+                          <td>Lord Alistair Vance KC</td>
+                          <td>24 Oct 2026 (Service of Reply)</td>
+                          <td>
+                            <span class="status-pill status-privileged"
+                              >Litigation Privilege</span
+                            >
+                          </td>
+                          <td>
+                            <span class="status-pill status-active"
+                              >Active Trial Prep</span
+                            >
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-gold">#MAT-2026-904</td>
+                          <td>
+                            <strong
+                              >Aegis FinTech Holdings £45M Series C
+                              Acquisition</strong
+                            >
+                            <div class="text-dim fs-8">
+                              Cross-border share purchase &amp; CMA antitrust
+                              clearance
+                            </div>
+                          </td>
+                          <td>Chambers Transaction Advisory</td>
+                          <td>Dame Helena Croft KC</td>
+                          <td>18 Oct 2026 (SPA Final Sign-off)</td>
+                          <td>
+                            <span class="status-pill status-privileged"
+                              >Legal Advice Privilege</span
+                            >
+                          </td>
+                          <td>
+                            <span class="status-pill status-pending"
+                              >Closing Review</span
+                            >
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-gold">#MAT-2026-773</td>
+                          <td>
+                            <strong
+                              >Vanguard BioSciences Patent Invalidation
+                              Defense</strong
+                            >
+                            <div class="text-dim fs-8">
+                              Defense against revocation under Patents Act 1977
+                              s.72
+                            </div>
+                          </td>
+                          <td>High Court (Chancery - Patents)</td>
+                          <td>Julian Sterling, Solicitor</td>
+                          <td>02 Nov 2026 (Expert Witness Exchange)</td>
+                          <td>
+                            <span class="status-pill status-privileged"
+                              >Litigation Privilege</span
+                            >
+                          </td>
+                          <td>
+                            <span class="status-pill status-urgent"
+                              >High Priority</span
+                            >
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-gold">#MAT-2026-955</td>
+                          <td>
+                            <strong
+                              >Skyline Real Estate Development
+                              Arbitration</strong
+                            >
+                            <div class="text-dim fs-8">
+                              LCIA UNCITRAL arbitration over Canary Wharf
+                              tenancy covenants
+                            </div>
+                          </td>
+                          <td>London Court of Int. Arbitration</td>
+                          <td>Marcus Thorne, Partner</td>
+                          <td>15 Nov 2026 (Jurisdictional Hearing)</td>
+                          <td>
+                            <span class="status-pill status-privileged"
+                              >Arbitral Privilege</span
+                            >
+                          </td>
+                          <td>
+                            <span class="status-pill status-active"
+                              >Pleadings Closed</span
+                            >
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Equal Height Analytics & Privileged Opinions Row -->
+              <div class="row g-4">
+                <div class="col-12 col-lg-6">
+                  <div class="legal-card h-100">
+                    <div class="legal-card-header">
+                      <h4 class="legal-card-title">
+                        <i class="fa-solid fa-chart-pie"></i> Retainer
+                        Allocation &amp; Practice Spend
+                      </h4>
+                      <span class="status-pill status-active">On Budget</span>
+                    </div>
+                    <div class="legal-card-body justify-content-between">
+                      <p class="text-muted fs-8">
+                        Distribution of corporate advisory retainer across
+                        practice disciplines for FY2026.
+                      </p>
+
+                      <div class="mb-3">
+                        <div class="d-flex justify-content-between fs-8 mb-1">
+                          <span>Commercial Litigation &amp; Trials</span>
+                          <span class="text-gold fw-bold">£83,025 (45%)</span>
+                        </div>
+                        <div class="progress-gold-wrap">
+                          <div
+                            class="progress-gold-bar"
+                            style="width: 45%"
+                          ></div>
+                        </div>
+                      </div>
+
+                      <div class="mb-3">
+                        <div class="d-flex justify-content-between fs-8 mb-1">
+                          <span>Corporate M&amp;A &amp; Competition Law</span>
+                          <span class="text-gold fw-bold">£55,350 (30%)</span>
+                        </div>
+                        <div class="progress-gold-wrap">
+                          <div
+                            class="progress-gold-bar"
+                            style="width: 30%"
+                          ></div>
+                        </div>
+                      </div>
+
+                      <div class="mb-3">
+                        <div class="d-flex justify-content-between fs-8 mb-1">
+                          <span>Regulatory Governance &amp; AML</span>
+                          <span class="text-gold fw-bold">£27,675 (15%)</span>
+                        </div>
+                        <div class="progress-gold-wrap">
+                          <div
+                            class="progress-gold-bar"
+                            style="width: 15%"
+                          ></div>
+                        </div>
+                      </div>
+
+                      <div class="mb-0">
+                        <div class="d-flex justify-content-between fs-8 mb-1">
+                          <span>Intellectual Property Protection</span>
+                          <span class="text-gold fw-bold">£18,450 (10%)</span>
+                        </div>
+                        <div class="progress-gold-wrap">
+                          <div
+                            class="progress-gold-bar"
+                            style="width: 10%"
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="legal-card-footer">
+                      <span class="text-dim fs-8"
+                        >Next Quarterly Audit: 30 Nov 2026</span
+                      >
+                      <button
+                        type="button"
+                        class="btn btn-outline-gold btn-sm-action"
+                      >
+                        View Retainer Contract
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12 col-lg-6">
+                  <div class="legal-card h-100">
+                    <div class="legal-card-header">
+                      <h4 class="legal-card-title">
+                        <i class="fa-solid fa-scroll"></i> Formal Chambers
+                        Advice Memo
+                      </h4>
+                      <span class="status-pill status-privileged"
+                        >Under LPP</span
+                      >
+                    </div>
+                    <div class="legal-card-body">
+                      <h6 class="text-gold mb-1">
+                        In Re: Section 172 Companies Act 2006 (Directors'
+                        Fiduciary Duties)
+                      </h6>
+                      <p class="text-muted fs-8 mb-3">
+                        Authored by Lord Alistair Vance KC • Delivered to Board
+                        of Directors on 12 Oct 2026
+                      </p>
+                      <p class="fs-8 text-main lh-base mb-3">
+                        "Counsel is instructed to advise on whether the proposed
+                        debt restructuring triggers statutory obligations to
+                        prioritize creditor interests under the rule in
+                        <em>BTI 2014 LLC v Sequana SA [2022] UKSC 25</em>. It is
+                        our opinion that the solvency cushion remains robust..."
+                      </p>
+                      <div
+                        class="p-3 bg-navy rounded border border-secondary mb-2"
+                      >
+                        <div
+                          class="d-flex align-items-center gap-2 fs-8 text-white"
+                        >
+                          <i class="fa-solid fa-file-pdf text-danger fs-5"></i>
+                          <div class="flex-grow-1">
+                            <strong
+                              >Chambers_Advice_Sequana_Duties_Signed.pdf</strong
+                            >
+                            <div class="text-muted fs-9">
+                              SHA-256: 4e8b91a0c23d4f828751... (Verified)
+                            </div>
+                          </div>
+                          <button
+                            type="button"
+                            class="btn btn-gold btn-sm-action"
+                          >
+                            Download PDF
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="legal-card-footer">
+                      <span class="text-dim fs-8"
+                        >Restricted to Board Members &amp; GC</span
+                      >
+                      <button type="button" class="btn btn-navy btn-sm-action">
+                        Request Clarification
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- View 1.2: Counsel Active Litigations -->
+            <div class="dashboard-view-pane" id="view-counsel-matters">
+              <div class="view-section-header">
+                <h3 class="view-section-title">
+                  Active Enterprise Litigation Docket
+                </h3>
+                <p class="view-section-desc">
+                  Comprehensive court tracking, case management orders, witness
+                  statement deadlines, and opposing counsel briefs.
+                </p>
+              </div>
+
+              <div class="legal-card mb-4">
+                <div class="legal-card-header">
+                  <h4 class="legal-card-title">
+                    <i class="fa-solid fa-landmark-dome"></i> Royal Courts of
+                    Justice &amp; Arbitration Registry
+                  </h4>
+                  <div class="d-flex gap-2">
+                    <button
+                      type="button"
+                      class="btn btn-outline-gold btn-sm-action"
+                    >
+                      <i class="fa-solid fa-filter me-1"></i> Filter Dockets
+                    </button>
+                    <button type="button" class="btn btn-gold btn-sm-action">
+                      <i class="fa-solid fa-plus me-1"></i> Instruct New Silk
+                    </button>
+                  </div>
+                </div>
+                <div class="legal-card-body p-0">
+                  <div class="table-responsive">
+                    <table class="legal-table">
+                      <thead>
+                        <tr>
+                          <th>Claim Ref</th>
+                          <th>Claimant vs Defendant</th>
+                          <th>Damages Claimed</th>
+                          <th>Opposing Counsel</th>
+                          <th>Presiding Judge / Tribunal</th>
+                          <th>Next Hearing</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="fw-bold text-gold">CL-2026-00412</td>
+                          <td>
+                            <strong>Meridian Logistics PLC (Claimant)</strong>
+                            <div class="text-dim fs-8">
+                              vs Thames Gateway Ports Authority
+                            </div>
+                          </td>
+                          <td class="text-emerald fw-bold">£14,500,000</td>
+                          <td>Slaughter &amp; May LLP</td>
+                          <td>Mr. Justice Cockerill (Commercial)</td>
+                          <td>24 Oct 2026</td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-outline-gold btn-sm-action"
+                            >
+                              View Pleadings
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-gold">HP-2026-00891</td>
+                          <td>
+                            <strong
+                              >Vanguard BioSciences Ltd (Defendant)</strong
+                            >
+                            <div class="text-dim fs-8">
+                              vs Geneva Pharmatech SA
+                            </div>
+                          </td>
+                          <td class="text-emerald fw-bold">£32,000,000</td>
+                          <td>Freshfields Bruckhaus Deringer</td>
+                          <td>Mr. Justice Mellor (Patents Court)</td>
+                          <td>02 Nov 2026</td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-outline-gold btn-sm-action"
+                            >
+                              View Pleadings
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-gold">ARB-LCIA-26/19</td>
+                          <td>
+                            <strong>Skyline Properties (Claimant)</strong>
+                            <div class="text-dim fs-8">
+                              vs Canary Wharf Tenancy Consortium
+                            </div>
+                          </td>
+                          <td class="text-emerald fw-bold">£6,800,000</td>
+                          <td>Linklaters LLP</td>
+                          <td>Rt. Hon. Lord Phillips of Worth Matravers</td>
+                          <td>15 Nov 2026</td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-outline-gold btn-sm-action"
+                            >
+                              View Pleadings
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-gold">CAT-2026-031</td>
+                          <td>
+                            <strong>Aegis FinTech (Target)</strong>
+                            <div class="text-dim fs-8">
+                              vs Competition &amp; Markets Authority
+                            </div>
+                          </td>
+                          <td class="text-gold fw-bold">Injunction Only</td>
+                          <td>Government Legal Department (GLD)</td>
+                          <td>Marcus Smith J (President, CAT)</td>
+                          <td>28 Nov 2026</td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-outline-gold btn-sm-action"
+                            >
+                              View Pleadings
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Litigation Lifecycle Tracker Card -->
+              <div class="legal-card">
+                <div class="legal-card-header">
+                  <h4 class="legal-card-title">
+                    <i class="fa-solid fa-list-check"></i> Procedural Case
+                    Milestones: Meridian Logistics vs Thames Gateway
+                  </h4>
+                  <span class="status-pill status-active"
+                    >Stage 4 of 6 Completed</span
+                  >
+                </div>
+                <div class="legal-card-body">
+                  <div class="row g-3 text-center">
+                    <div class="col-6 col-md-2">
+                      <div
+                        class="p-3 bg-navy rounded border border-success h-100 d-flex flex-column justify-content-between"
+                      >
+                        <i
+                          class="fa-solid fa-circle-check text-success fs-5 mb-2"
+                        ></i>
+                        <strong class="fs-8">Pre-Action Protocol</strong>
+                        <span class="text-dim fs-9">Settled 14 May 2026</span>
+                      </div>
+                    </div>
+                    <div class="col-6 col-md-2">
+                      <div
+                        class="p-3 bg-navy rounded border border-success h-100 d-flex flex-column justify-content-between"
+                      >
+                        <i
+                          class="fa-solid fa-circle-check text-success fs-5 mb-2"
+                        ></i>
+                        <strong class="fs-8">Particulars of Claim</strong>
+                        <span class="text-dim fs-9">Served 22 Jun 2026</span>
+                      </div>
+                    </div>
+                    <div class="col-6 col-md-2">
+                      <div
+                        class="p-3 bg-navy rounded border border-success h-100 d-flex flex-column justify-content-between"
+                      >
+                        <i
+                          class="fa-solid fa-circle-check text-success fs-5 mb-2"
+                        ></i>
+                        <strong class="fs-8">Defense &amp; Counterclaim</strong>
+                        <span class="text-dim fs-9">Received 18 Jul 2026</span>
+                      </div>
+                    </div>
+                    <div class="col-6 col-md-2">
+                      <div
+                        class="p-3 bg-navy rounded border border-success h-100 d-flex flex-column justify-content-between"
+                      >
+                        <i
+                          class="fa-solid fa-circle-check text-success fs-5 mb-2"
+                        ></i>
+                        <strong class="fs-8">Electronic Disclosure</strong>
+                        <span class="text-dim fs-9">CPR 31 Completed</span>
+                      </div>
+                    </div>
+                    <div class="col-6 col-md-2">
+                      <div
+                        class="p-3 bg-navy rounded border border-warning h-100 d-flex flex-column justify-content-between"
+                      >
+                        <i
+                          class="fa-solid fa-spinner fa-spin text-warning fs-5 mb-2"
+                        ></i>
+                        <strong class="fs-8">Witness Exchange</strong>
+                        <span class="text-gold fs-9">Due 24 Oct 2026</span>
+                      </div>
+                    </div>
+                    <div class="col-6 col-md-2">
+                      <div
+                        class="p-3 bg-navy rounded border border-secondary h-100 d-flex flex-column justify-content-between"
+                      >
+                        <i
+                          class="fa-solid fa-hourglass-half text-dim fs-5 mb-2"
+                        ></i>
+                        <strong class="fs-8">Trial Hearing</strong>
+                        <span class="text-dim fs-9"
+                          >Commencing 12 Jan 2027</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- View 1.3: Counsel Escrow & Billing -->
+            <div class="dashboard-view-pane" id="view-counsel-billing">
+              <div class="view-section-header">
+                <h3 class="view-section-title">
+                  SRA Regulated Escrow &amp; Outside Counsel Spend
+                </h3>
+                <p class="view-section-desc">
+                  Client money trust accounting compliant with Solicitors
+                  Regulation Authority (SRA) Accounts Rules 2019.
+                </p>
+              </div>
+
+              <!-- Escrow Summary Cards (Equal Height) -->
+              <div class="row g-4 mb-4">
+                <div class="col-12 col-md-4">
+                  <div class="legal-card h-100">
+                    <div class="legal-card-header">
+                      <h4 class="legal-card-title">
+                        <i class="fa-solid fa-vault"></i> Client Trust Escrow
+                      </h4>
+                      <span class="status-pill status-active">Protected</span>
+                    </div>
+                    <div
+                      class="legal-card-body justify-content-center text-center py-4"
+                    >
+                      <span class="text-dim fs-8 text-uppercase"
+                        >Segregated Balance at Barclays</span
+                      >
+                      <h2 class="text-gold font-heading my-2">£420,000.00</h2>
+                      <p class="text-muted fs-8 mb-0">
+                        Under SRA Client Account Rule 2.1 (Instant Disbursal)
+                      </p>
+                    </div>
+                    <div class="legal-card-footer">
+                      <button
+                        type="button"
+                        class="btn btn-gold w-100 justify-content-center"
+                      >
+                        Top Up Trust Retainer
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                  <div class="legal-card h-100">
+                    <div class="legal-card-header">
+                      <h4 class="legal-card-title">
+                        <i class="fa-solid fa-receipt"></i> Billed Year to Date
+                      </h4>
+                      <span class="status-pill status-privileged">Audited</span>
+                    </div>
+                    <div
+                      class="legal-card-body justify-content-center text-center py-4"
+                    >
+                      <span class="text-dim fs-8 text-uppercase"
+                        >Total Fee Earned</span
+                      >
+                      <h2 class="text-white font-heading my-2">£184,500.00</h2>
+                      <p class="text-muted fs-8 mb-0">
+                        Across 328 Billable Partner &amp; Silk Hours
+                      </p>
+                    </div>
+                    <div class="legal-card-footer">
+                      <button
+                        type="button"
+                        class="btn btn-outline-gold w-100 justify-content-center"
+                      >
+                        Download Tax Invoices
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                  <div class="legal-card h-100">
+                    <div class="legal-card-header">
+                      <h4 class="legal-card-title">
+                        <i class="fa-solid fa-gauge-high"></i> Budget Efficiency
+                      </h4>
+                      <span class="status-pill status-active">92.4%</span>
+                    </div>
+                    <div
+                      class="legal-card-body justify-content-center text-center py-4"
+                    >
+                      <span class="text-dim fs-8 text-uppercase"
+                        >Spend Cap: £220,000</span
+                      >
+                      <h2 class="text-emerald font-heading my-2">-£35,500</h2>
+                      <p class="text-muted fs-8 mb-0">
+                        Favorable budget variance to forecast
+                      </p>
+                    </div>
+                    <div class="legal-card-footer">
+                      <button
+                        type="button"
+                        class="btn btn-navy w-100 justify-content-center"
+                      >
+                        Adjust Forecast
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Itemized Fee Notes Table -->
+              <div class="legal-card">
+                <div class="legal-card-header">
+                  <h4 class="legal-card-title">
+                    <i class="fa-solid fa-file-invoice"></i> Itemized Fee Notes
+                    &amp; Disbursements Ledger
+                  </h4>
+                  <button
+                    type="button"
+                    class="btn btn-outline-gold btn-sm-action"
+                  >
+                    Download CSV Statement
+                  </button>
+                </div>
+                <div class="legal-card-body p-0">
+                  <div class="table-responsive">
+                    <table class="legal-table">
+                      <thead>
+                        <tr>
+                          <th>Invoice #</th>
+                          <th>Billing Date</th>
+                          <th>Fee Earner &amp; Grade</th>
+                          <th>Matter Description</th>
+                          <th>Hours Logged</th>
+                          <th>Hourly Rate</th>
+                          <th>Amount (ex VAT)</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="fw-bold text-gold">INV-2026-1044</td>
+                          <td>01 Oct 2026</td>
+                          <td>Lord Alistair Vance KC (Silk)</td>
+                          <td>
+                            High Court skeleton argument &amp; witness proofing
+                          </td>
+                          <td>22.5 hrs</td>
+                          <td>£850.00</td>
+                          <td>£19,125.00</td>
+                          <td>
+                            <span class="status-pill status-active"
+                              >Disbursed (Escrow)</span
+                            >
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-gold">INV-2026-1045</td>
+                          <td>03 Oct 2026</td>
+                          <td>Dame Helena Croft KC (Silk)</td>
+                          <td>
+                            Aegis M&amp;A Share Purchase Agreement negotiations
+                          </td>
+                          <td>18.0 hrs</td>
+                          <td>£850.00</td>
+                          <td>£15,300.00</td>
+                          <td>
+                            <span class="status-pill status-active"
+                              >Disbursed (Escrow)</span
+                            >
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-gold">INV-2026-1046</td>
+                          <td>08 Oct 2026</td>
+                          <td>Julian Sterling (Senior Associate)</td>
+                          <td>
+                            Patents disclosure analysis &amp; prior art search
+                          </td>
+                          <td>34.0 hrs</td>
+                          <td>£450.00</td>
+                          <td>£15,300.00</td>
+                          <td>
+                            <span class="status-pill status-active"
+                              >Disbursed (Escrow)</span
+                            >
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-gold">INV-2026-1047</td>
+                          <td>12 Oct 2026</td>
+                          <td>Royal Courts of Justice (Court Fee)</td>
+                          <td>Issue Fee for Commercial Court Application</td>
+                          <td>Disbursement</td>
+                          <td>Fixed Fee</td>
+                          <td>£10,000.00</td>
+                          <td>
+                            <span class="status-pill status-pending"
+                              >Pending GC Approval</span
+                            >
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- View 1.4: Counsel Vault -->
+            <div class="dashboard-view-pane" id="view-counsel-vault">
+              <div class="view-section-header">
+                <h3 class="view-section-title">
+                  Evidentiary Filings &amp; Document Vault
+                </h3>
+                <p class="view-section-desc">
+                  Hardware-encrypted legal document repository protected by
+                  Legal Professional Privilege (LPP).
+                </p>
+              </div>
+
+              <div class="legal-card">
+                <div class="legal-card-header">
+                  <h4 class="legal-card-title">
+                    <i class="fa-solid fa-lock"></i> Judicial Dossiers &amp;
+                    Cryptographic Manifest
+                  </h4>
+                  <button type="button" class="btn btn-gold btn-sm-action">
+                    <i class="fa-solid fa-upload me-1"></i> Upload Evidence
+                    Brief
+                  </button>
+                </div>
+                <div class="legal-card-body p-0">
+                  <div class="table-responsive">
+                    <table class="legal-table">
+                      <thead>
+                        <tr>
+                          <th>Document Title</th>
+                          <th>Matter Identifier</th>
+                          <th>Filing Authority</th>
+                          <th>Date Sealed</th>
+                          <th>SHA-256 Hash</th>
+                          <th>Privilege Tier</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="fw-bold text-white">
+                            <i class="fa-solid fa-file-pdf text-danger me-2"></i
+                            >Meridian_Particulars_of_Claim_Final.pdf
+                          </td>
+                          <td class="text-gold">#MAT-2026-881</td>
+                          <td>Commercial Court e-Filing</td>
+                          <td>22 Jun 2026</td>
+                          <td>
+                            <code class="text-gold">9f8e7a6b5c4d3e2f...</code>
+                          </td>
+                          <td>
+                            <span class="status-pill status-privileged"
+                              >Litigation Privilege</span
+                            >
+                          </td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-outline-gold btn-sm-action"
+                            >
+                              Download
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-white">
+                            <i
+                              class="fa-solid fa-file-contract text-warning me-2"
+                            ></i
+                            >Aegis_SPA_Share_Purchase_Agreement_v8.docx
+                          </td>
+                          <td class="text-gold">#MAT-2026-904</td>
+                          <td>Chambers Transaction Vault</td>
+                          <td>14 Oct 2026</td>
+                          <td>
+                            <code class="text-gold">1a2b3c4d5e6f7a8b...</code>
+                          </td>
+                          <td>
+                            <span class="status-pill status-privileged"
+                              >Legal Advice Privilege</span
+                            >
+                          </td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-outline-gold btn-sm-action"
+                            >
+                              Download
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-white">
+                            <i
+                              class="fa-solid fa-file-shield text-info me-2"
+                            ></i
+                            >Expert_Report_Dr_Henderson_Biotech.pdf
+                          </td>
+                          <td class="text-gold">#MAT-2026-773</td>
+                          <td>Patents High Court Division</td>
+                          <td>09 Oct 2026</td>
+                          <td>
+                            <code class="text-gold">7c8d9e0f1a2b3c4d...</code>
+                          </td>
+                          <td>
+                            <span class="status-pill status-privileged"
+                              >Under Protective Seal</span
+                            >
+                          </td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-outline-gold btn-sm-action"
+                            >
+                              Download
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-white">
+                            <i
+                              class="fa-solid fa-file-lines text-success me-2"
+                            ></i
+                            >Witness_Affidavit_CFO_Signed.pdf
+                          </td>
+                          <td class="text-gold">#MAT-2026-881</td>
+                          <td>Rolls Building Master Record</td>
+                          <td>04 Oct 2026</td>
+                          <td>
+                            <code class="text-gold">4d5e6f7a8b9c0d1e...</code>
+                          </td>
+                          <td>
+                            <span class="status-pill status-privileged"
+                              >Affidavit under Oath</span
+                            >
+                          </td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-outline-gold btn-sm-action"
+                            >
+                              Download
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- View 1.5: Counsel Messages -->
+            <div class="dashboard-view-pane" id="view-counsel-messages">
+              <div class="view-section-header">
+                <h3 class="view-section-title">
+                  Privileged Chambers Correspondence
+                </h3>
+                <p class="view-section-desc">
+                  Encrypted communications channel between Corporate Counsel and
+                  King's Counsel Silks.
+                </p>
+              </div>
+
+              <div class="row g-4">
+                <div class="col-12 col-lg-5">
+                  <div class="legal-card h-100">
+                    <div class="legal-card-header">
+                      <h4 class="legal-card-title">
+                        <i class="fa-solid fa-inbox"></i> Counsel Threads
+                      </h4>
+                      <span class="status-pill status-urgent">2 Unread</span>
+                    </div>
+                    <div class="legal-card-body p-0">
+                      <div class="list-group list-group-flush bg-transparent">
+                        <button
+                          type="button"
+                          class="list-group-item list-group-item-action bg-transparent text-white border-secondary p-3 active"
+                        >
+                          <div
+                            class="d-flex justify-content-between align-items-center mb-1"
+                          >
+                            <strong class="text-gold fs-8"
+                              >Lord Alistair Vance KC</strong
+                            >
+                            <span class="text-dim fs-9">Today, 09:14</span>
+                          </div>
+                          <h6 class="fs-8 mb-1">
+                            Re: Meridian Logistics Cross-Examination Plan
+                          </h6>
+                          <p class="text-dim fs-9 mb-0 text-truncate">
+                            We have reviewed the defense expert disclosure and
+                            noted 3 material contradictions...
+                          </p>
+                        </button>
+                        <button
+                          type="button"
+                          class="list-group-item list-group-item-action bg-transparent text-white border-secondary p-3"
+                        >
+                          <div
+                            class="d-flex justify-content-between align-items-center mb-1"
+                          >
+                            <strong class="text-gold fs-8"
+                              >Dame Helena Croft KC</strong
+                            >
+                            <span class="text-dim fs-9">Yesterday</span>
+                          </div>
+                          <h6 class="fs-8 mb-1">
+                            Re: Aegis Series C Antitrust Clearance
+                          </h6>
+                          <p class="text-dim fs-9 mb-0 text-truncate">
+                            CMA has accepted our phase 1 undertakings on market
+                            share dilution...
+                          </p>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12 col-lg-7">
+                  <div class="legal-card h-100">
+                    <div class="legal-card-header">
+                      <div>
+                        <h4 class="legal-card-title text-gold">
+                          <i class="fa-solid fa-lock"></i> Meridian Logistics
+                          Trial Strategy
+                        </h4>
+                        <span class="legal-card-subtitle"
+                          >Participants: Lord Alistair Vance KC, Counsel Eleanor
+                          Vance (GC)</span
+                        >
+                      </div>
+                      <span class="status-pill status-privileged"
+                        >LPP Encrypted</span
+                      >
+                    </div>
+                    <div
+                      class="legal-card-body"
+                      style="
+                        min-height: 280px;
+                        max-height: 380px;
+                        overflow-y: auto;
+                      "
+                    >
+                      <div
+                        class="p-3 bg-navy rounded border border-secondary mb-3"
+                      >
+                        <div class="d-flex justify-content-between fs-8 mb-1">
+                          <strong class="text-gold"
+                            >Lord Alistair Vance KC (Senior Silk)</strong
+                          >
+                          <span class="text-dim fs-9">09:14 AM</span>
+                        </div>
+                        <p class="fs-8 text-main mb-0">
+                          "Good morning Eleanor. Having scrutinized Thames
+                          Gateway's latest skeleton, their sole defense rests on
+                          force majeure under Clause 18. Under the authority in
+                          <em>The Super Servant Two [1990]</em>, self-induced
+                          frustration cannot be relied upon. We are in a
+                          commanding trial posture."
+                        </p>
+                      </div>
+
+                      <div
+                        class="p-3 bg-dark rounded border border-gold ms-4 mb-3"
+                      >
+                        <div class="d-flex justify-content-between fs-8 mb-1">
+                          <strong class="text-white"
+                            >Counsel Eleanor Vance (General Counsel)</strong
+                          >
+                          <span class="text-dim fs-9">09:28 AM</span>
+                        </div>
+                        <p class="fs-8 text-main mb-0">
+                          "Thank you Alistair. The Board is in full accord. Let
+                          us file the Supplemental Reply at Rolls Building
+                          before 16:00 today."
+                        </p>
+                      </div>
+                    </div>
+                    <div class="legal-card-footer">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control bg-dark text-white border-secondary"
+                          placeholder="Type confidential privileged message..."
+                        />
+                        <button class="btn btn-gold" type="button">
+                          <i class="fa-solid fa-paper-plane me-1"></i> Send
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- =================================================================
+                 ROLE 2: SENIOR MANAGING PARTNER / KC BARRISTER (5 Views)
+                 ================================================================= -->
+
+            <!-- View 2.1: Partner Executive & Revenue -->
+            <div class="dashboard-view-pane" id="view-partner-overview">
+              <div class="view-section-header">
+                <h3 class="view-section-title">
+                  Chambers Executive &amp; Revenue Operations
+                </h3>
+                <p class="view-section-desc">
+                  Firm-wide billing realization, partner equity distributions,
+                  Supreme Court appearances, and practice margins.
+                </p>
+              </div>
+
+              <!-- Metric Stat Cards (Equal Height) -->
+              <div class="row g-4 mb-4">
+                <div class="col-12 col-sm-6 col-xl-3">
+                  <div class="stat-card-widget">
+                    <div class="stat-widget-content">
+                      <span class="stat-widget-label">Chambers Gross Fees</span>
+                      <div class="stat-widget-value">£14.85M</div>
+                      <span class="stat-widget-note text-emerald"
+                        ><i class="fa-solid fa-arrow-up me-1"></i>+18.4% vs
+                        FY2025</span
+                      >
+                    </div>
+                    <div class="stat-widget-icon">
+                      <i class="fa-solid fa-landmark"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-6 col-xl-3">
+                  <div class="stat-card-widget">
+                    <div class="stat-widget-content">
+                      <span class="stat-widget-label"
+                        >Active KC Silk Briefs</span
+                      >
+                      <div class="stat-widget-value">28 Briefs</div>
+                      <span class="stat-widget-note text-gold"
+                        ><i class="fa-solid fa-gavel me-1"></i>Supreme &amp;
+                        Appellate Courts</span
+                      >
+                    </div>
+                    <div class="stat-widget-icon">
+                      <i class="fa-solid fa-scroll"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-6 col-xl-3">
+                  <div class="stat-card-widget">
+                    <div class="stat-widget-content">
+                      <span class="stat-widget-label">Realisation Rate</span>
+                      <div class="stat-widget-value">96.8%</div>
+                      <span class="stat-widget-note text-emerald"
+                        ><i class="fa-solid fa-check-double me-1"></i>High-value
+                        collection</span
+                      >
+                    </div>
+                    <div class="stat-widget-icon">
+                      <i class="fa-solid fa-percent"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-6 col-xl-3">
+                  <div class="stat-card-widget">
+                    <div class="stat-widget-content">
+                      <span class="stat-widget-label">Verdict Success</span>
+                      <div class="stat-widget-value">98.4%</div>
+                      <span class="stat-widget-note text-gold"
+                        ><i class="fa-solid fa-trophy me-1"></i>124 Judgments
+                        &amp; Settlements</span
+                      >
+                    </div>
+                    <div class="stat-widget-icon">
+                      <i class="fa-solid fa-scale-unbalanced-flip"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- High Court Appearances Table -->
+              <div class="legal-card mb-4">
+                <div class="legal-card-header">
+                  <div>
+                    <h4 class="legal-card-title">
+                      <i class="fa-solid fa-calendar-days"></i> Senior Partner
+                      &amp; King's Counsel Hearing Docket (Next 14 Days)
+                    </h4>
+                    <span class="legal-card-subtitle"
+                      >Appellate oral arguments and Commercial Court
+                      listings</span
+                    >
+                  </div>
+                  <button
+                    type="button"
+                    class="btn btn-outline-gold btn-sm-action"
+                  >
+                    Export Chambers Calendar
+                  </button>
+                </div>
+                <div class="legal-card-body p-0">
+                  <div class="table-responsive">
+                    <table class="legal-table">
+                      <thead>
+                        <tr>
+                          <th>Listing Date</th>
+                          <th>Court / Tribunal</th>
+                          <th>Case Citation &amp; Matter</th>
+                          <th>Lead KC Silk</th>
+                          <th>Presiding Lord Justice</th>
+                          <th>Estimated Trial Days</th>
+                          <th>Chambers Posture</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="fw-bold text-gold">19 Oct 2026</td>
+                          <td>Court of Appeal (Civil Division)</td>
+                          <td>
+                            <strong
+                              >Barclays Private v. Sovereign Trust [2026]
+                              EWCA</strong
+                            >
+                          </td>
+                          <td>Lord Alistair Vance KC</td>
+                          <td>Lady Justice Carr (Master of the Rolls)</td>
+                          <td>3 Days</td>
+                          <td>
+                            <span class="status-pill status-active"
+                              >Oral Argument Prepared</span
+                            >
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-gold">22 Oct 2026</td>
+                          <td>UK Supreme Court (Middlesex Guildhall)</td>
+                          <td>
+                            <strong
+                              >Secretary of State v. NexaTech AI Patents [2026]
+                              UKSC</strong
+                            >
+                          </td>
+                          <td>Julian Sterling (Junior Silk)</td>
+                          <td>Lord Reed (President, UKSC)</td>
+                          <td>2 Days</td>
+                          <td>
+                            <span class="status-pill status-privileged"
+                              >En Banc Hearing</span
+                            >
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-gold">27 Oct 2026</td>
+                          <td>Commercial Court (Rolls Building Court 26)</td>
+                          <td>
+                            <strong
+                              >Glencore Energy v. Black Sea Shipping BV</strong
+                            >
+                          </td>
+                          <td>Dame Helena Croft KC</td>
+                          <td>Mr. Justice Foxton</td>
+                          <td>5 Days</td>
+                          <td>
+                            <span class="status-pill status-urgent"
+                              >Trial in Progress</span
+                            >
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Practice Group Financial Performance -->
+              <div class="row g-4">
+                <div class="col-12 col-lg-7">
+                  <div class="legal-card h-100">
+                    <div class="legal-card-header">
+                      <h4 class="legal-card-title">
+                        <i class="fa-solid fa-chart-simple"></i> Practice
+                        Division Gross Fee Contribution
+                      </h4>
+                      <span class="status-pill status-active"
+                        >Chambers Realisation: 96.8%</span
+                      >
+                    </div>
+                    <div class="legal-card-body">
+                      <div class="table-responsive">
+                        <table class="legal-table">
+                          <thead>
+                            <tr>
+                              <th>Practice Discipline</th>
+                              <th>Division Silk Lead</th>
+                              <th>Billed YTD</th>
+                              <th>Margin</th>
+                              <th>Status</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>Commercial Litigation &amp; Arbitration</td>
+                              <td class="text-gold">Lord Alistair Vance KC</td>
+                              <td>£6,682,500</td>
+                              <td class="text-emerald">64.2%</td>
+                              <td>
+                                <span class="status-pill status-active"
+                                  >+22% YoY</span
+                                >
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>Corporate M&amp;A &amp; Competition</td>
+                              <td class="text-gold">Dame Helena Croft KC</td>
+                              <td>£4,455,000</td>
+                              <td class="text-emerald">58.7%</td>
+                              <td>
+                                <span class="status-pill status-active"
+                                  >+14% YoY</span
+                                >
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>Intellectual Property &amp; BioTech</td>
+                              <td class="text-gold">Julian Sterling, Esq.</td>
+                              <td>£2,227,500</td>
+                              <td class="text-emerald">61.0%</td>
+                              <td>
+                                <span class="status-pill status-active"
+                                  >+19% YoY</span
+                                >
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>White-Collar &amp; Regulatory Defense</td>
+                              <td class="text-gold">Marcus Thorne, Partner</td>
+                              <td>£1,485,000</td>
+                              <td class="text-emerald">54.5%</td>
+                              <td>
+                                <span class="status-pill status-active"
+                                  >+11% YoY</span
+                                >
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12 col-lg-5">
+                  <div class="legal-card h-100">
+                    <div class="legal-card-header">
+                      <h4 class="legal-card-title">
+                        <i class="fa-solid fa-award"></i> Chambers Precedents
+                        &amp; Honours
+                      </h4>
+                      <span class="status-pill status-privileged"
+                        >Legal 500 Tier 1</span
+                      >
+                    </div>
+                    <div class="legal-card-body">
+                      <div
+                        class="mb-3 p-3 bg-navy rounded border border-secondary"
+                      >
+                        <strong class="text-gold fs-8"
+                          >Legal 500 UK 2026 Rankings</strong
+                        >
+                        <p class="fs-9 text-dim mb-0">
+                          Awarded "Commercial Litigation Set of the Year" with 8
+                          Silks ranked Band 1.
+                        </p>
+                      </div>
+                      <div
+                        class="mb-3 p-3 bg-navy rounded border border-secondary"
+                      >
+                        <strong class="text-gold fs-8"
+                          >Chambers &amp; Partners Global</strong
+                        >
+                        <p class="fs-9 text-dim mb-0">
+                          Tier 1 Cross-Border Dispute Resolution Set in London
+                          &amp; Singapore.
+                        </p>
+                      </div>
+                      <div class="p-3 bg-navy rounded border border-secondary">
+                        <strong class="text-gold fs-8"
+                          >Supreme Court Precedent Victory</strong
+                        >
+                        <p class="fs-9 text-dim mb-0">
+                          Established definitive precedent on Directors' Duties
+                          in <em>Sequana</em> appeal.
+                        </p>
+                      </div>
+                    </div>
+                    <div class="legal-card-footer">
+                      <button
+                        type="button"
+                        class="btn btn-gold w-100 justify-content-center"
+                      >
+                        Chambers Annual Report
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- View 2.2: Partner Hearing Docket -->
+            <div class="dashboard-view-pane" id="view-partner-docket">
+              <div class="view-section-header">
+                <h3 class="view-section-title">
+                  King's Counsel Hearing Docket &amp; Master Trial Diary
+                </h3>
+                <p class="view-section-desc">
+                  Master calendar of trials, appeals, arbitrations, and skeleton
+                  argument filing deadlines.
+                </p>
+              </div>
+
+              <div class="legal-card mb-4">
+                <div class="legal-card-header">
+                  <h4 class="legal-card-title">
+                    <i class="fa-solid fa-gavel"></i> Chambers Master Court
+                    Diary (Michaelmas Term 2026)
+                  </h4>
+                  <button type="button" class="btn btn-gold btn-sm-action">
+                    <i class="fa-solid fa-plus me-1"></i> Add Court Listing
+                  </button>
+                </div>
+                <div class="legal-card-body p-0">
+                  <div class="table-responsive">
+                    <table class="legal-table">
+                      <thead>
+                        <tr>
+                          <th>Date</th>
+                          <th>Court</th>
+                          <th>Case Title</th>
+                          <th>Leading Silk</th>
+                          <th>Junior Counsel</th>
+                          <th>Opposing Silk</th>
+                          <th>Hearing Type</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="fw-bold text-gold">19 Oct 2026</td>
+                          <td>Court of Appeal</td>
+                          <td>Barclays Private v Sovereign Trust</td>
+                          <td>Lord Alistair Vance KC</td>
+                          <td>G. Sinclair</td>
+                          <td>Lord Pannick KC</td>
+                          <td>
+                            <span class="status-pill status-urgent"
+                              >Substantive Appeal</span
+                            >
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-gold">22 Oct 2026</td>
+                          <td>UK Supreme Court</td>
+                          <td>Secretary of State v NexaTech</td>
+                          <td>Lord Alistair Vance KC</td>
+                          <td>J. Sterling</td>
+                          <td>Sir James Eadie KC</td>
+                          <td>
+                            <span class="status-pill status-privileged"
+                              >Final Judicial Hearing</span
+                            >
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-gold">27 Oct 2026</td>
+                          <td>Commercial Court</td>
+                          <td>Glencore Energy v Black Sea</td>
+                          <td>Dame Helena Croft KC</td>
+                          <td>R. Vance</td>
+                          <td>Mark Howard KC</td>
+                          <td>
+                            <span class="status-pill status-active"
+                              >Trial Day 1 of 5</span
+                            >
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-gold">04 Nov 2026</td>
+                          <td>Rolls Building (Chancery)</td>
+                          <td>Vanguard BioSciences Revocation</td>
+                          <td>Julian Sterling</td>
+                          <td>P. Davies</td>
+                          <td>Tom Mitcheson KC</td>
+                          <td>
+                            <span class="status-pill status-active"
+                              >Case Management Conference</span
+                            >
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- View 2.3: Partner Practice Groups -->
+            <div class="dashboard-view-pane" id="view-partner-practice">
+              <div class="view-section-header">
+                <h3 class="view-section-title">
+                  Practice Groups &amp; Partner Fee Earner Ratios
+                </h3>
+                <p class="view-section-desc">
+                  Departmental billable hour allocations, realization yields,
+                  and pupil advocate deployment.
+                </p>
+              </div>
+
+              <div class="legal-card">
+                <div class="legal-card-header">
+                  <h4 class="legal-card-title">
+                    <i class="fa-solid fa-users-gear"></i> Departmental Advocate
+                    Utilization
+                  </h4>
+                  <button
+                    type="button"
+                    class="btn btn-outline-gold btn-sm-action"
+                  >
+                    Download Staffing Report
+                  </button>
+                </div>
+                <div class="legal-card-body p-0">
+                  <div class="table-responsive">
+                    <table class="legal-table">
+                      <thead>
+                        <tr>
+                          <th>Department</th>
+                          <th>Silks (KC)</th>
+                          <th>Senior Juniors</th>
+                          <th>Solicitor Advocates</th>
+                          <th>Avg Billable Rate</th>
+                          <th>Utilization Target</th>
+                          <th>Current Yield</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="fw-bold text-white">
+                            Commercial Litigation
+                          </td>
+                          <td>6 KCs</td>
+                          <td>8 Juniors</td>
+                          <td>10 Solicitors</td>
+                          <td>£650/hr</td>
+                          <td>90%</td>
+                          <td class="text-emerald fw-bold">96.4%</td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-white">
+                            Corporate M&amp;A &amp; Private Equity
+                          </td>
+                          <td>4 KCs</td>
+                          <td>6 Juniors</td>
+                          <td>8 Solicitors</td>
+                          <td>£700/hr</td>
+                          <td>88%</td>
+                          <td class="text-emerald fw-bold">94.8%</td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-white">
+                            Intellectual Property &amp; BioTech
+                          </td>
+                          <td>3 KCs</td>
+                          <td>4 Juniors</td>
+                          <td>6 Solicitors</td>
+                          <td>£620/hr</td>
+                          <td>85%</td>
+                          <td class="text-emerald fw-bold">92.1%</td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-white">
+                            White-Collar &amp; Financial Crime
+                          </td>
+                          <td>3 KCs</td>
+                          <td>4 Juniors</td>
+                          <td>5 Solicitors</td>
+                          <td>£680/hr</td>
+                          <td>85%</td>
+                          <td class="text-emerald fw-bold">89.5%</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- View 2.4: Partner Trust Disbursements -->
+            <div class="dashboard-view-pane" id="view-partner-trust">
+              <div class="view-section-header">
+                <h3 class="view-section-title">
+                  Chambers Trust Accounts &amp; Partner Equity Draws
+                </h3>
+                <p class="view-section-desc">
+                  SRA Accounts Rules 2019 reconciliation, quarterly equity
+                  disbursements, and capital reserves.
+                </p>
+              </div>
+
+              <div class="row g-4 mb-4">
+                <div class="col-12 col-md-6">
+                  <div class="legal-card h-100">
+                    <div class="legal-card-header">
+                      <h4 class="legal-card-title">
+                        <i class="fa-solid fa-building-columns"></i> SRA
+                        Segregated Client Monies
+                      </h4>
+                      <span class="status-pill status-active"
+                        >Fully Reconciled</span
+                      >
+                    </div>
+                    <div
+                      class="legal-card-body justify-content-center text-center py-4"
+                    >
+                      <span class="text-dim fs-8 text-uppercase"
+                        >Held across Barclays &amp; HSBC</span
+                      >
+                      <h2 class="text-gold font-heading my-2">£8,640,000.00</h2>
+                      <p class="text-muted fs-8 mb-0">
+                        100% compliant with SRA Rule 2.1 (Separation of Firm and
+                        Client Assets)
+                      </p>
+                    </div>
+                    <div class="legal-card-footer">
+                      <span class="text-dim fs-8"
+                        >Last Daily Reconcile: Today, 08:30 GMT</span
+                      >
+                      <button
+                        type="button"
+                        class="btn btn-outline-gold btn-sm-action"
+                      >
+                        Audit Certificate
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                  <div class="legal-card h-100">
+                    <div class="legal-card-header">
+                      <h4 class="legal-card-title">
+                        <i class="fa-solid fa-shield"></i> Indemnity Insurance
+                        Cover
+                      </h4>
+                      <span class="status-pill status-active"
+                        >Active Policy</span
+                      >
+                    </div>
+                    <div
+                      class="legal-card-body justify-content-center text-center py-4"
+                    >
+                      <span class="text-dim fs-8 text-uppercase"
+                        >Lloyd's of London Underwriters</span
+                      >
+                      <h2 class="text-white font-heading my-2">
+                        £15,000,000.00
+                      </h2>
+                      <p class="text-muted fs-8 mb-0">
+                        Professional Indemnity Policy #LL-SRA-98442-2026
+                      </p>
+                    </div>
+                    <div class="legal-card-footer">
+                      <span class="text-dim fs-8"
+                        >Renewal Date: 31 Mar 2027</span
+                      >
+                      <button type="button" class="btn btn-navy btn-sm-action">
+                        View Policy Terms
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- View 2.5: Partner Pupillage & Talent -->
+            <div class="dashboard-view-pane" id="view-partner-pupillage">
+              <div class="view-section-header">
+                <h3 class="view-section-title">
+                  Chambers Pupils, Silks &amp; Advocate Talent
+                </h3>
+                <p class="view-section-desc">
+                  Bar Standards Board (BSB) pupillage mentoring, CPD compliance,
+                  and advocate development.
+                </p>
+              </div>
+
+              <div class="legal-card">
+                <div class="legal-card-header">
+                  <h4 class="legal-card-title">
+                    <i class="fa-solid fa-graduation-cap"></i> 2026 Chambers
+                    Pupillage Cohort
+                  </h4>
+                  <button type="button" class="btn btn-gold btn-sm-action">
+                    Review Assessment Scores
+                  </button>
+                </div>
+                <div class="legal-card-body p-0">
+                  <div class="table-responsive">
+                    <table class="legal-table">
+                      <thead>
+                        <tr>
+                          <th>Pupil Advocate</th>
+                          <th>Degree / Inns of Court</th>
+                          <th>Pupil Supervisor</th>
+                          <th>Current Seat</th>
+                          <th>Tenancy Decision</th>
+                          <th>BSB Log Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="fw-bold text-white">Eleanor Croft</td>
+                          <td>Oxford BCL (First Class) • Middle Temple</td>
+                          <td>Lord Alistair Vance KC</td>
+                          <td>Commercial Litigation</td>
+                          <td>
+                            <span class="status-pill status-active"
+                              >Tenancy Recommended</span
+                            >
+                          </td>
+                          <td>
+                            <span class="status-pill status-active"
+                              >100% Complete</span
+                            >
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-white">Sebastian Sterling</td>
+                          <td>Cambridge LLM • Lincoln's Inn</td>
+                          <td>Dame Helena Croft KC</td>
+                          <td>Corporate M&amp;A &amp; Competition</td>
+                          <td>
+                            <span class="status-pill status-pending"
+                              >Decision Pending (Nov)</span
+                            >
+                          </td>
+                          <td>
+                            <span class="status-pill status-active"
+                              >94% Complete</span
+                            >
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-white">Amina Al-Mansoor</td>
+                          <td>LSE LLB • Gray's Inn</td>
+                          <td>Julian Sterling, Solicitor</td>
+                          <td>Intellectual Property &amp; Patents</td>
+                          <td>
+                            <span class="status-pill status-pending"
+                              >Decision Pending (Nov)</span
+                            >
+                          </td>
+                          <td>
+                            <span class="status-pill status-active"
+                              >96% Complete</span
+                            >
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- =================================================================
+                 ROLE 3: ASSOCIATE SOLICITOR / LEGAL CONSULTANT (5 Views)
+                 ================================================================= -->
+
+            <!-- View 3.1: Solicitor Casework Overview -->
+            <div class="dashboard-view-pane" id="view-solicitor-overview">
+              <div class="view-section-header">
+                <h3 class="view-section-title">
+                  Solicitor Casework &amp; Billables Dashboard
+                </h3>
+                <p class="view-section-desc">
+                  Personal billable targets, assigned litigation files, Royal
+                  Courts e-filing deadlines, and witness proofing schedules.
+                </p>
+              </div>
+
+              <!-- Metric Stat Cards (Equal Height) -->
+              <div class="row g-4 mb-4">
+                <div class="col-12 col-sm-6 col-xl-3">
+                  <div class="stat-card-widget">
+                    <div class="stat-widget-content">
+                      <span class="stat-widget-label">Weekly Billables</span>
+                      <div class="stat-widget-value">38.5 hrs</div>
+                      <span class="stat-widget-note text-emerald"
+                        ><i class="fa-solid fa-arrow-trend-up me-1"></i>96.2% of
+                        40h target</span
+                      >
+                    </div>
+                    <div class="stat-widget-icon">
+                      <i class="fa-solid fa-stopwatch"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-6 col-xl-3">
+                  <div class="stat-card-widget">
+                    <div class="stat-widget-content">
+                      <span class="stat-widget-label">Assigned Matters</span>
+                      <div class="stat-widget-value">14 Files</div>
+                      <span class="stat-widget-note text-gold"
+                        ><i class="fa-solid fa-folder-tree me-1"></i>8
+                        Commercial, 4 Chancery</span
+                      >
+                    </div>
+                    <div class="stat-widget-icon">
+                      <i class="fa-solid fa-briefcase"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-6 col-xl-3">
+                  <div class="stat-card-widget">
+                    <div class="stat-widget-content">
+                      <span class="stat-widget-label">Submissions Due</span>
+                      <div class="stat-widget-value">3 Filings</div>
+                      <span class="stat-widget-note text-urgent"
+                        ><i class="fa-solid fa-clock me-1"></i>Next due:
+                        Tomorrow, 16:00</span
+                      >
+                    </div>
+                    <div class="stat-widget-icon">
+                      <i class="fa-solid fa-feather-pointed"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-6 col-xl-3">
+                  <div class="stat-card-widget">
+                    <div class="stat-widget-content">
+                      <span class="stat-widget-label">Research Memos</span>
+                      <div class="stat-widget-value">7 Memos</div>
+                      <span class="stat-widget-note text-emerald"
+                        ><i class="fa-solid fa-check me-1"></i>All Partner
+                        Approved</span
+                      >
+                    </div>
+                    <div class="stat-widget-icon">
+                      <i class="fa-solid fa-book-bookmark"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Casework Priority Board -->
+              <div class="legal-card mb-4">
+                <div class="legal-card-header">
+                  <h4 class="legal-card-title">
+                    <i class="fa-solid fa-list-check"></i> Assigned Files &amp;
+                    Immediate Court Submissions
+                  </h4>
+                  <button type="button" class="btn btn-gold btn-sm-action">
+                    <i class="fa-solid fa-plus me-1"></i> Record Time Entry
+                  </button>
+                </div>
+                <div class="legal-card-body p-0">
+                  <div class="table-responsive">
+                    <table class="legal-table">
+                      <thead>
+                        <tr>
+                          <th>File #</th>
+                          <th>Client &amp; Matter Name</th>
+                          <th>Supervising Partner</th>
+                          <th>Task Description</th>
+                          <th>Statutory / Court Basis</th>
+                          <th>Deadline</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="fw-bold text-gold">FILE-8812</td>
+                          <td>Meridian Logistics PLC</td>
+                          <td>Lord Alistair Vance KC</td>
+                          <td>Drafting Supplemental Reply to Defense</td>
+                          <td>CPR Part 16 (Statements of Case)</td>
+                          <td class="text-urgent fw-bold">Tomorrow, 16:00</td>
+                          <td>
+                            <span class="status-pill status-urgent"
+                              >Draft in Final Review</span
+                            >
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-gold">FILE-7740</td>
+                          <td>Vanguard BioSciences Ltd</td>
+                          <td>Julian Sterling</td>
+                          <td>Compiling Patent Witness Bundle</td>
+                          <td>Patents Court Practice Direction</td>
+                          <td>21 Oct 2026</td>
+                          <td>
+                            <span class="status-pill status-active"
+                              >Collating Affidavits</span
+                            >
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-gold">FILE-9015</td>
+                          <td>Aegis FinTech Holdings</td>
+                          <td>Dame Helena Croft KC</td>
+                          <td>Reviewing Disclosure Schedule Discrepancies</td>
+                          <td>Companies Act 2006 Part 28</td>
+                          <td>25 Oct 2026</td>
+                          <td>
+                            <span class="status-pill status-pending"
+                              >In Progress</span
+                            >
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- View 3.2: Solicitor Drafting Queue -->
+            <div class="dashboard-view-pane" id="view-solicitor-drafting">
+              <div class="view-section-header">
+                <h3 class="view-section-title">
+                  Legal Pleadings Drafting Queue
+                </h3>
+                <p class="view-section-desc">
+                  Particulars of claim, witness statements, skeleton arguments,
+                  and applications for freezing orders.
+                </p>
+              </div>
+
+              <div class="legal-card">
+                <div class="legal-card-header">
+                  <h4 class="legal-card-title">
+                    <i class="fa-solid fa-file-pen"></i> Active Drafting Queue
+                    &amp; Partner Sign-off
+                  </h4>
+                  <button type="button" class="btn btn-gold btn-sm-action">
+                    <i class="fa-solid fa-plus me-1"></i> New Legal Instrument
+                  </button>
+                </div>
+                <div class="legal-card-body p-0">
+                  <div class="table-responsive">
+                    <table class="legal-table">
+                      <thead>
+                        <tr>
+                          <th>Instrument Name</th>
+                          <th>Matter ID</th>
+                          <th>Court Division</th>
+                          <th>Supervising Silk</th>
+                          <th>Due Date</th>
+                          <th>Review Status</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="fw-bold text-white">
+                            Particulars of Claim (Fraudulent Misrep)
+                          </td>
+                          <td class="text-gold">#MAT-2026-990</td>
+                          <td>Commercial Court</td>
+                          <td>Lord Alistair Vance KC</td>
+                          <td>20 Oct 2026</td>
+                          <td>
+                            <span class="status-pill status-urgent"
+                              >Awaiting Partner Sign-off</span
+                            >
+                          </td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-outline-gold btn-sm-action"
+                            >
+                              Review Draft
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-white">
+                            Witness Statement of Dr. Henderson
+                          </td>
+                          <td class="text-gold">#MAT-2026-773</td>
+                          <td>Chancery (Patents)</td>
+                          <td>Julian Sterling</td>
+                          <td>23 Oct 2026</td>
+                          <td>
+                            <span class="status-pill status-active"
+                              >Editing v3</span
+                            >
+                          </td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-outline-gold btn-sm-action"
+                            >
+                              Edit Pleading
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-white">
+                            Skeleton Argument on Jurisdiction
+                          </td>
+                          <td class="text-gold">#MAT-2026-955</td>
+                          <td>LCIA Arbitration</td>
+                          <td>Marcus Thorne</td>
+                          <td>28 Oct 2026</td>
+                          <td>
+                            <span class="status-pill status-pending"
+                              >Initial Research</span
+                            >
+                          </td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-outline-gold btn-sm-action"
+                            >
+                              Edit Pleading
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- View 3.3: Solicitor Time Tracker -->
+            <div class="dashboard-view-pane" id="view-solicitor-time">
+              <div class="view-section-header">
+                <h3 class="view-section-title">
+                  Billable Time Tracker &amp; Hours Ledger
+                </h3>
+                <p class="view-section-desc">
+                  Record, log, and reconcile billable attorney hours under
+                  standard SRA fee scales.
+                </p>
+              </div>
+
+              <!-- Time Logger Widget & Timesheet -->
+              <div class="row g-4">
+                <div class="col-12 col-lg-5">
+                  <div class="legal-card h-100">
+                    <div class="legal-card-header">
+                      <h4 class="legal-card-title">
+                        <i class="fa-solid fa-clock"></i> Record Time Entry
+                      </h4>
+                      <span class="status-pill status-active"
+                        >Rate: £450/hr</span
+                      >
+                    </div>
+                    <div class="legal-card-body">
+                      <form id="timeEntryForm" onsubmit="return false;">
+                        <div class="mb-3">
+                          <label class="form-label fs-8 text-gold"
+                            >Matter Reference</label
+                          >
+                          <select
+                            class="form-select bg-dark text-white border-secondary fs-8"
+                          >
+                            <option>
+                              #MAT-2026-881 - Meridian Logistics PLC
+                            </option>
+                            <option>
+                              #MAT-2026-773 - Vanguard BioSciences Ltd
+                            </option>
+                            <option>
+                              #MAT-2026-904 - Aegis FinTech Series C
+                            </option>
+                          </select>
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label fs-8 text-gold"
+                            >Activity Code</label
+                          >
+                          <select
+                            class="form-select bg-dark text-white border-secondary fs-8"
+                          >
+                            <option>A102 - Legal Pleadings Drafting</option>
+                            <option>A103 - Legal Precedent Research</option>
+                            <option>
+                              A104 - Client Consultation / Witness Proofing
+                            </option>
+                            <option>
+                              A105 - Court Appearance / Master Hearing
+                            </option>
+                          </select>
+                        </div>
+                        <div class="row g-2 mb-3">
+                          <div class="col-6">
+                            <label class="form-label fs-8 text-gold"
+                              >Duration (Hours)</label
+                            >
+                            <input
+                              type="number"
+                              step="0.25"
+                              class="form-control bg-dark text-white border-secondary fs-8"
+                              value="2.5"
+                            />
+                          </div>
+                          <div class="col-6">
+                            <label class="form-label fs-8 text-gold"
+                              >Date</label
+                            >
+                            <input
+                              type="date"
+                              class="form-control bg-dark text-white border-secondary fs-8"
+                              value="2026-10-15"
+                            />
+                          </div>
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label fs-8 text-gold"
+                            >Narrative Description</label
+                          >
+                          <textarea
+                            class="form-control bg-dark text-white border-secondary fs-8"
+                            rows="3"
+                            placeholder="Detailed professional description for client fee note..."
+                          ></textarea>
+                        </div>
+                        <button
+                          type="submit"
+                          class="btn btn-gold w-100 justify-content-center"
+                        >
+                          Commit Billable Time
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12 col-lg-7">
+                  <div class="legal-card h-100">
+                    <div class="legal-card-header">
+                      <h4 class="legal-card-title">
+                        <i class="fa-solid fa-calendar-week"></i> This Week's
+                        Time Entries
+                      </h4>
+                      <span class="text-gold fw-bold fs-8"
+                        >Total: 38.5 hrs (£17,325)</span
+                      >
+                    </div>
+                    <div class="legal-card-body p-0">
+                      <div class="table-responsive">
+                        <table class="legal-table">
+                          <thead>
+                            <tr>
+                              <th>Date</th>
+                              <th>Matter</th>
+                              <th>Activity</th>
+                              <th>Duration</th>
+                              <th>Amount</th>
+                              <th>Status</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>15 Oct 2026</td>
+                              <td class="text-gold">#MAT-881</td>
+                              <td>Drafting Supplemental Reply</td>
+                              <td>3.5 hrs</td>
+                              <td>£1,575</td>
+                              <td>
+                                <span class="status-pill status-active"
+                                  >Approved</span
+                                >
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>14 Oct 2026</td>
+                              <td class="text-gold">#MAT-773</td>
+                              <td>Patent Prior Art Examination</td>
+                              <td>5.0 hrs</td>
+                              <td>£2,250</td>
+                              <td>
+                                <span class="status-pill status-active"
+                                  >Approved</span
+                                >
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>13 Oct 2026</td>
+                              <td class="text-gold">#MAT-904</td>
+                              <td>Antitrust Disclosures Audit</td>
+                              <td>6.5 hrs</td>
+                              <td>£2,925</td>
+                              <td>
+                                <span class="status-pill status-active"
+                                  >Approved</span
+                                >
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>12 Oct 2026</td>
+                              <td class="text-gold">#MAT-881</td>
+                              <td>Witness Proofing with Meridian CFO</td>
+                              <td>4.5 hrs</td>
+                              <td>£2,025</td>
+                              <td>
+                                <span class="status-pill status-active"
+                                  >Approved</span
+                                >
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- View 3.4: Solicitor Precedents Library -->
+            <div class="dashboard-view-pane" id="view-solicitor-precedents">
+              <div class="view-section-header">
+                <h3 class="view-section-title">
+                  Judicial Precedents &amp; Standard Chambers Templates
+                </h3>
+                <p class="view-section-desc">
+                  LexisNexis &amp; Westlaw integrated repository of leading UK
+                  judgments and standard form commercial agreements.
+                </p>
+              </div>
+
+              <div class="legal-card">
+                <div class="legal-card-header">
+                  <h4 class="legal-card-title">
+                    <i class="fa-solid fa-book"></i> Curated Precedent
+                    Repository
+                  </h4>
+                  <button
+                    type="button"
+                    class="btn btn-outline-gold btn-sm-action"
+                  >
+                    Search Westlaw UK
+                  </button>
+                </div>
+                <div class="legal-card-body p-0">
+                  <div class="table-responsive">
+                    <table class="legal-table">
+                      <thead>
+                        <tr>
+                          <th>Precedent Template</th>
+                          <th>Jurisdiction</th>
+                          <th>Practice Discipline</th>
+                          <th>Authoritative Case Reference</th>
+                          <th>Last Updated</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="fw-bold text-white">
+                            <i class="fa-solid fa-file-word text-info me-2"></i
+                            >Chambers_Standard_SPA_2026.docx
+                          </td>
+                          <td>England &amp; Wales</td>
+                          <td>Corporate M&amp;A</td>
+                          <td>Companies Act 2006 Model Articles</td>
+                          <td>01 Oct 2026</td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-gold btn-sm-action"
+                            >
+                              Use Template
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-white">
+                            <i class="fa-solid fa-file-word text-info me-2"></i
+                            >Freezing_Injunction_Application_CPR25.docx
+                          </td>
+                          <td>High Court (Chancery)</td>
+                          <td>Commercial Litigation</td>
+                          <td><em>Mareva Compania Naviera SA [1975]</em></td>
+                          <td>15 Sep 2026</td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-gold btn-sm-action"
+                            >
+                              Use Template
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-white">
+                            <i class="fa-solid fa-file-word text-info me-2"></i
+                            >Non_Disclosure_LPP_Protected_2026.docx
+                          </td>
+                          <td>Cross-Border</td>
+                          <td>IP &amp; Trade Secrets</td>
+                          <td>Trade Secrets Regulations 2018</td>
+                          <td>28 Sep 2026</td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-gold btn-sm-action"
+                            >
+                              Use Template
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- View 3.5: Solicitor Advisory Sessions -->
+            <div class="dashboard-view-pane" id="view-solicitor-advisory">
+              <div class="view-section-header">
+                <h3 class="view-section-title">
+                  Client Consultations &amp; Witness Proofing
+                </h3>
+                <p class="view-section-desc">
+                  Confidential conference schedules, trial prep sessions, and
+                  witness examination simulations.
+                </p>
+              </div>
+
+              <div class="legal-card">
+                <div class="legal-card-header">
+                  <h4 class="legal-card-title">
+                    <i class="fa-solid fa-calendar-check"></i> Today's Advisory
+                    Calendar
+                  </h4>
+                  <button type="button" class="btn btn-gold btn-sm-action">
+                    Schedule Conference
+                  </button>
+                </div>
+                <div class="legal-card-body p-0">
+                  <div class="table-responsive">
+                    <table class="legal-table">
+                      <thead>
+                        <tr>
+                          <th>Time</th>
+                          <th>Session Type</th>
+                          <th>Client / Expert Witness</th>
+                          <th>Matter ID</th>
+                          <th>Location / Chambers Room</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="fw-bold text-gold">11:00 AM</td>
+                          <td>Witness Proofing Session</td>
+                          <td>Dr. Arthur Henderson (Expert Witness)</td>
+                          <td>#MAT-2026-773</td>
+                          <td>Conference Room 3B (Holborn)</td>
+                          <td>
+                            <span class="status-pill status-active"
+                              >Confirmed</span
+                            >
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-gold">02:30 PM</td>
+                          <td>Pre-Trial Conference</td>
+                          <td>Lord Alistair Vance KC &amp; Meridian GC</td>
+                          <td>#MAT-2026-881</td>
+                          <td>Encrypted Zoom Chambers #901</td>
+                          <td>
+                            <span class="status-pill status-privileged"
+                              >Encrypted</span
+                            >
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-gold">04:30 PM</td>
+                          <td>Antitrust Disclosures Debrief</td>
+                          <td>Aegis FinTech Legal Team</td>
+                          <td>#MAT-2026-904</td>
+                          <td>Chambers Suite 12</td>
+                          <td>
+                            <span class="status-pill status-active"
+                              >Confirmed</span
+                            >
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- =================================================================
+                 ROLE 4: COMPLIANCE & DATA PROTECTION OFFICER (5 Views)
+                 ================================================================= -->
+
+            <!-- View 4.1: Compliance Regulatory & AML Overview -->
+            <div class="dashboard-view-pane" id="view-compliance-overview">
+              <div class="view-section-header">
+                <h3 class="view-section-title">
+                  Regulatory Governance &amp; AML Compliance Overview
+                </h3>
+                <p class="view-section-desc">
+                  Solicitors Regulation Authority (SRA) Standards compliance, UK
+                  Sanctions &amp; AML monitoring, and GDPR privacy logs.
+                </p>
+              </div>
+
+              <!-- Metric Stat Cards (Equal Height) -->
+              <div class="row g-4 mb-4">
+                <div class="col-12 col-sm-6 col-xl-3">
+                  <div class="stat-card-widget">
+                    <div class="stat-widget-content">
+                      <span class="stat-widget-label">SRA Audit Readiness</span>
+                      <div class="stat-widget-value">99.4%</div>
+                      <span class="stat-widget-note text-emerald"
+                        ><i class="fa-solid fa-circle-check me-1"></i>Standards
+                        &amp; Regulations 2019</span
+                      >
+                    </div>
+                    <div class="stat-widget-icon">
+                      <i class="fa-solid fa-shield-check"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-6 col-xl-3">
+                  <div class="stat-card-widget">
+                    <div class="stat-widget-content">
+                      <span class="stat-widget-label"
+                        >AML Client Screenings</span
+                      >
+                      <div class="stat-widget-value">142 Cleared</div>
+                      <span class="stat-widget-note text-emerald"
+                        ><i class="fa-solid fa-fingerprint me-1"></i>100% HM
+                        Treasury PEP check</span
+                      >
+                    </div>
+                    <div class="stat-widget-icon">
+                      <i class="fa-solid fa-id-card-clip"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-6 col-xl-3">
+                  <div class="stat-card-widget">
+                    <div class="stat-widget-content">
+                      <span class="stat-widget-label">Conflict Checks</span>
+                      <div class="stat-widget-value">2 Urgent</div>
+                      <span class="stat-widget-note text-urgent"
+                        ><i class="fa-solid fa-triangle-exclamation me-1"></i
+                        >Awaiting Ethics Committee</span
+                      >
+                    </div>
+                    <div class="stat-widget-icon">
+                      <i class="fa-solid fa-handshake-slash"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-6 col-xl-3">
+                  <div class="stat-card-widget">
+                    <div class="stat-widget-content">
+                      <span class="stat-widget-label">GDPR Breaches</span>
+                      <div class="stat-widget-value">0 Incidents</div>
+                      <span class="stat-widget-note text-gold"
+                        ><i class="fa-solid fa-lock me-1"></i>ISO 27001
+                        Certified</span
+                      >
+                    </div>
+                    <div class="stat-widget-icon">
+                      <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- High Priority Compliance Action Items -->
+              <div class="legal-card mb-4">
+                <div class="legal-card-header">
+                  <h4 class="legal-card-title">
+                    <i class="fa-solid fa-triangle-exclamation"></i> Real-Time
+                    Sanctions &amp; Regulatory Alert Queue
+                  </h4>
+                  <button
+                    type="button"
+                    class="btn btn-outline-gold btn-sm-action"
+                  >
+                    Review SRA Notice
+                  </button>
+                </div>
+                <div class="legal-card-body p-0">
+                  <div class="table-responsive">
+                    <table class="legal-table">
+                      <thead>
+                        <tr>
+                          <th>Alert Ref</th>
+                          <th>Subject Matter</th>
+                          <th>Risk Classification</th>
+                          <th>Originating Partner</th>
+                          <th>Statutory Instrument</th>
+                          <th>Action Required</th>
+                          <th>Deadline</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="fw-bold text-gold">SANCT-2026-08</td>
+                          <td>Cross-Border Escrow Inward Wire (£2.4M)</td>
+                          <td>
+                            <span class="status-pill status-urgent"
+                              >High Risk PEP Check</span
+                            >
+                          </td>
+                          <td>Marcus Thorne</td>
+                          <td>Money Laundering Regulations 2017 reg.33</td>
+                          <td>Verify Ultimate Beneficial Owner (UBO)</td>
+                          <td class="text-urgent fw-bold">Today, 17:00</td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-gold">CONF-2026-44</td>
+                          <td>Proposed Retainer: Quantum BioTech</td>
+                          <td>
+                            <span class="status-pill status-pending"
+                              >Adverse Party Conflict</span
+                            >
+                          </td>
+                          <td>Lord Alistair Vance KC</td>
+                          <td>SRA Code of Conduct Rule 6.2</td>
+                          <td>Impose Ethical Information Wall</td>
+                          <td>18 Oct 2026</td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-gold">GDPR-2026-12</td>
+                          <td>Subject Access Request (SAR): Former Witness</td>
+                          <td>
+                            <span class="status-pill status-privileged"
+                              >LPP Redaction Required</span
+                            >
+                          </td>
+                          <td>Julian Sterling</td>
+                          <td>Data Protection Act 2018 s.45</td>
+                          <td>Apply Legal Professional Privilege Exemption</td>
+                          <td>22 Oct 2026</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- View 4.2: Compliance Conflicts -->
+            <div class="dashboard-view-pane" id="view-compliance-conflicts">
+              <div class="view-section-header">
+                <h3 class="view-section-title">
+                  Conflict of Interest Clearance Clearinghouse
+                </h3>
+                <p class="view-section-desc">
+                  SRA Code of Conduct Rule 6.2 conflict assessments, adverse
+                  party matching, and ethical information barriers.
+                </p>
+              </div>
+
+              <div class="legal-card">
+                <div class="legal-card-header">
+                  <h4 class="legal-card-title">
+                    <i class="fa-solid fa-code-compare"></i> Conflict Searches
+                    in Progress
+                  </h4>
+                  <button type="button" class="btn btn-gold btn-sm-action">
+                    <i class="fa-solid fa-magnifying-glass me-1"></i> New
+                    Conflict Search
+                  </button>
+                </div>
+                <div class="legal-card-body p-0">
+                  <div class="table-responsive">
+                    <table class="legal-table">
+                      <thead>
+                        <tr>
+                          <th>Search ID</th>
+                          <th>Prospective Client</th>
+                          <th>Adverse Parties Listed</th>
+                          <th>Matter Nature</th>
+                          <th>Originating Silk</th>
+                          <th>Search Scope</th>
+                          <th>Clearance Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="fw-bold text-gold">CHK-2026-118</td>
+                          <td>Nordic Renewables AS</td>
+                          <td>Vestas Wind, Siemens Energy</td>
+                          <td>Canary Wharf Arbitration</td>
+                          <td>Lord Alistair Vance KC</td>
+                          <td>Full Chambers &amp; Former Clients</td>
+                          <td>
+                            <span class="status-pill status-active"
+                              >Cleared (No Conflict)</span
+                            >
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-gold">CHK-2026-119</td>
+                          <td>Apex Capital Partners</td>
+                          <td>Aegis FinTech Holdings (Existing)</td>
+                          <td>Hostile Takeover Advisory</td>
+                          <td>Dame Helena Croft KC</td>
+                          <td>Direct Adversary Analysis</td>
+                          <td>
+                            <span class="status-pill status-urgent"
+                              >DECLINED (SRA Rule 6.2)</span
+                            >
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-gold">CHK-2026-120</td>
+                          <td>BioGenix Pharma Corp</td>
+                          <td>Geneva Pharmatech SA</td>
+                          <td>Patent Licensing Advisory</td>
+                          <td>Julian Sterling</td>
+                          <td>Separate Teams Search</td>
+                          <td>
+                            <span class="status-pill status-pending"
+                              >Ethical Wall Imposed</span
+                            >
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- View 4.3: Compliance AML & CDD -->
+            <div class="dashboard-view-pane" id="view-compliance-aml">
+              <div class="view-section-header">
+                <h3 class="view-section-title">
+                  Anti-Money Laundering (AML) &amp; CDD Screening
+                </h3>
+                <p class="view-section-desc">
+                  Client Due Diligence, Politically Exposed Persons (PEP)
+                  checks, and HM Treasury Sanctions enforcement.
+                </p>
+              </div>
+
+              <div class="legal-card">
+                <div class="legal-card-header">
+                  <h4 class="legal-card-title">
+                    <i class="fa-solid fa-fingerprint"></i> High-Value Client
+                    Due Diligence Register
+                  </h4>
+                  <button
+                    type="button"
+                    class="btn btn-outline-gold btn-sm-action"
+                  >
+                    Export MLR2017 Audit Log
+                  </button>
+                </div>
+                <div class="legal-card-body p-0">
+                  <div class="table-responsive">
+                    <table class="legal-table">
+                      <thead>
+                        <tr>
+                          <th>Client Entity</th>
+                          <th>Jurisdiction</th>
+                          <th>Source of Wealth Verified</th>
+                          <th>PEP Status</th>
+                          <th>Sanctions Screen</th>
+                          <th>Risk Score</th>
+                          <th>Certificate</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="fw-bold text-white">
+                            Meridian Logistics PLC
+                          </td>
+                          <td>United Kingdom (LSE Listed)</td>
+                          <td>Public Financial Filings</td>
+                          <td>
+                            <span class="status-pill status-active"
+                              >Negative</span
+                            >
+                          </td>
+                          <td>
+                            <span class="status-pill status-active">Clear</span>
+                          </td>
+                          <td>Low Risk (0.2)</td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-gold btn-sm-action"
+                            >
+                              View CDD
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-white">
+                            Skyline Capital Holdings
+                          </td>
+                          <td>Cayman Islands / UK</td>
+                          <td>Audited Trust Accounts (KPMG)</td>
+                          <td>
+                            <span class="status-pill status-active"
+                              >Negative</span
+                            >
+                          </td>
+                          <td>
+                            <span class="status-pill status-active">Clear</span>
+                          </td>
+                          <td>Medium Risk (1.4)</td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-gold btn-sm-action"
+                            >
+                              View CDD
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-white">
+                            Geneva Biotech Assets SA
+                          </td>
+                          <td>Switzerland</td>
+                          <td>Private Equity Capital Call</td>
+                          <td>
+                            <span class="status-pill status-pending"
+                              >Enhanced PEP Review</span
+                            >
+                          </td>
+                          <td>
+                            <span class="status-pill status-active">Clear</span>
+                          </td>
+                          <td>High Risk (2.8)</td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-gold btn-sm-action"
+                            >
+                              View CDD
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- View 4.4: Compliance GDPR & Privacy -->
+            <div class="dashboard-view-pane" id="view-compliance-gdpr">
+              <div class="view-section-header">
+                <h3 class="view-section-title">
+                  GDPR &amp; Legal Professional Privilege Register
+                </h3>
+                <p class="view-section-desc">
+                  Data Protection Act 2018 statutory compliance, SAR requests,
+                  and privilege logs protecting counsel correspondence.
+                </p>
+              </div>
+
+              <div class="legal-card">
+                <div class="legal-card-header">
+                  <h4 class="legal-card-title">
+                    <i class="fa-solid fa-lock"></i> Statutory Privilege
+                    Register (LPP vs Non-Privileged)
+                  </h4>
+                  <button type="button" class="btn btn-gold btn-sm-action">
+                    Certify Privilege Log
+                  </button>
+                </div>
+                <div class="legal-card-body p-0">
+                  <div class="table-responsive">
+                    <table class="legal-table">
+                      <thead>
+                        <tr>
+                          <th>Record ID</th>
+                          <th>Description of Record</th>
+                          <th>Privilege Classification</th>
+                          <th>Dominant Purpose Test</th>
+                          <th>Redaction Schedule</th>
+                          <th>Protection Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="fw-bold text-gold">LPP-2026-901</td>
+                          <td>Counsel Instruction Brief on Mergers</td>
+                          <td>
+                            <span class="status-pill status-privileged"
+                              >Legal Advice Privilege</span
+                            >
+                          </td>
+                          <td>Obtaining legal advice from Silk</td>
+                          <td>Wholly Withheld</td>
+                          <td>
+                            <span class="status-pill status-active"
+                              >Privileged Forever</span
+                            >
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-gold">LPP-2026-902</td>
+                          <td>Draft Expert Report on Patent Infringement</td>
+                          <td>
+                            <span class="status-pill status-privileged"
+                              >Litigation Privilege</span
+                            >
+                          </td>
+                          <td>Solely for Commercial Court Defense</td>
+                          <td>Privileged until Exchanged</td>
+                          <td>
+                            <span class="status-pill status-active"
+                              >Under Protective Order</span
+                            >
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fw-bold text-gold">LPP-2026-903</td>
+                          <td>Board Minutes discussing Litigation Budget</td>
+                          <td>
+                            <span class="status-pill status-privileged"
+                              >Dual-Purpose Document</span
+                            >
+                          </td>
+                          <td>Legal content redacted; balance disclosable</td>
+                          <td>Redacted in Part</td>
+                          <td>
+                            <span class="status-pill status-pending"
+                              >Redaction Review</span
+                            >
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- View 4.5: Compliance SRA Audits -->
+            <div class="dashboard-view-pane" id="view-compliance-sra">
+              <div class="view-section-header">
+                <h3 class="view-section-title">
+                  SRA Standards &amp; Annual Audit Scorecard
+                </h3>
+                <p class="view-section-desc">
+                  Regulatory audit validation covering Client Care, Fee
+                  Transparency, Diversity, and Indemnity rules.
+                </p>
+              </div>
+
+              <div class="row g-4 mb-4">
+                <div class="col-12 col-md-6">
+                  <div class="legal-card h-100">
+                    <div class="legal-card-header">
+                      <h4 class="legal-card-title">
+                        <i class="fa-solid fa-clipboard-check"></i> SRA
+                        Regulatory Compliance Scorecard
+                      </h4>
+                      <span class="status-pill status-active"
+                        >Grade A+ (Exemplary)</span
+                      >
+                    </div>
+                    <div class="legal-card-body justify-content-between">
+                      <div class="mb-3">
+                        <div class="d-flex justify-content-between fs-8 mb-1">
+                          <span>SRA Accounts Rules 2019 (Client Monies)</span>
+                          <span class="text-gold fw-bold">100% Compliant</span>
+                        </div>
+                        <div class="progress-gold-wrap">
+                          <div
+                            class="progress-gold-bar"
+                            style="width: 100%"
+                          ></div>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <div class="d-flex justify-content-between fs-8 mb-1">
+                          <span>AML &amp; Economic Crime Act 2023</span>
+                          <span class="text-gold fw-bold">99.2% Compliant</span>
+                        </div>
+                        <div class="progress-gold-wrap">
+                          <div
+                            class="progress-gold-bar"
+                            style="width: 99.2%"
+                          ></div>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <div class="d-flex justify-content-between fs-8 mb-1">
+                          <span>Advocate Continuing Competence (CPD)</span>
+                          <span class="text-gold fw-bold">98.5% Compliant</span>
+                        </div>
+                        <div class="progress-gold-wrap">
+                          <div
+                            class="progress-gold-bar"
+                            style="width: 98.5%"
+                          ></div>
+                        </div>
+                      </div>
+                      <div class="mb-0">
+                        <div class="d-flex justify-content-between fs-8 mb-1">
+                          <span>Transparency Rules (Cost Displays)</span>
+                          <span class="text-gold fw-bold">100% Compliant</span>
+                        </div>
+                        <div class="progress-gold-wrap">
+                          <div
+                            class="progress-gold-bar"
+                            style="width: 100%"
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="legal-card-footer">
+                      <span class="text-dim fs-8"
+                        >Next SRA Self-Assessment Due: Jan 2027</span
+                      >
+                      <button
+                        type="button"
+                        class="btn btn-outline-gold btn-sm-action"
+                      >
+                        View Full Audit Report
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                  <div class="legal-card h-100">
+                    <div class="legal-card-header">
+                      <h4 class="legal-card-title">
+                        <i class="fa-solid fa-certificate"></i> Chambers
+                        Regulated Accreditations
+                      </h4>
+                      <span class="status-pill status-active">Active</span>
+                    </div>
+                    <div class="legal-card-body">
+                      <div
+                        class="mb-3 p-3 bg-navy rounded border border-secondary"
+                      >
+                        <strong class="text-gold fs-8"
+                          >Solicitors Regulation Authority (SRA)</strong
+                        >
+                        <p class="fs-9 text-dim mb-0">
+                          Authorized Chambers Entity #589214 • Authorised &amp;
+                          Regulated under England &amp; Wales Law.
+                        </p>
+                      </div>
+                      <div
+                        class="mb-3 p-3 bg-navy rounded border border-secondary"
+                      >
+                        <strong class="text-gold fs-8"
+                          >Bar Standards Board (BSB)</strong
+                        >
+                        <p class="fs-9 text-dim mb-0">
+                          Recognized Authorized Training Organisation (ATO) for
+                          King's Counsel pupillages.
+                        </p>
+                      </div>
+                      <div class="p-3 bg-navy rounded border border-secondary">
+                        <strong class="text-gold fs-8"
+                          >ISO 27001 &amp; Cyber Essentials Plus</strong
+                        >
+                        <p class="fs-9 text-dim mb-0">
+                          Certified Hardware-Level Encryption for confidential
+                          courtroom files.
+                        </p>
+                      </div>
+                    </div>
+                    <div class="legal-card-footer">
+                      <button
+                        type="button"
+                        class="btn btn-gold w-100 justify-content-center"
+                      >
+                        Download SRA Certificate
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Bootstrap 5.3 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Master Script & Dedicated Dashboard Controller -->
+    <script src="../assets/js/dashboard.js"></script>
+  </body>
+</html>

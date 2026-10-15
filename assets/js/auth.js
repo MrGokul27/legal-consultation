@@ -120,6 +120,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const pwRules = document.getElementById("loginPwRules");
     const toastAlert = document.getElementById("loginToastAlert");
 
+    // Pre-fill from registration if available
+    try {
+      const regUser = JSON.parse(
+        localStorage.getItem("stackly_reg_user") || "null",
+      );
+      if (regUser) {
+        if (regUser.email && !emailInput.value)
+          emailInput.value = regUser.email;
+        if (regUser.role && !roleInput.value) roleInput.value = regUser.role;
+      }
+    } catch (e) {}
+
     // Live password strength
     passwordInput.addEventListener("input", () => {
       const pw = passwordInput.value;
@@ -226,14 +238,57 @@ document.addEventListener("DOMContentLoaded", () => {
         submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin me-2"></i>Verifying SRA Credentials...`;
       }
 
+      // Store user session in localStorage so dashboard can display exact entered role and email
+      const roleVal = roleInput.value;
+      const roleText = roleInput.options[roleInput.selectedIndex]
+        ? roleInput.options[roleInput.selectedIndex].text.trim()
+        : roleVal;
+      const emailVal = emailInput.value.trim();
+
+      // Check if we have registered username for this email
+      let displayName = "";
+      try {
+        const regUser = JSON.parse(
+          localStorage.getItem("stackly_reg_user") || "null",
+        );
+        if (regUser && regUser.email === emailVal && regUser.username) {
+          displayName = regUser.username;
+        }
+      } catch (e) {}
+
+      if (!displayName) {
+        const prefix = emailVal.split("@")[0] || "Client";
+        displayName = prefix
+          .split(/[._-]/)
+          .map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+          .join(" ");
+      }
+
+      const userSession = {
+        role: roleVal,
+        roleLabel: roleText,
+        email: emailVal,
+        displayName: displayName,
+        loginTime: new Date().toLocaleDateString("en-GB", {
+          day: "numeric",
+          month: "short",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+        rememberMe: rememberMeInput.checked,
+      };
+
+      localStorage.setItem("stackly_legal_user", JSON.stringify(userSession));
+
       if (toastAlert) {
         toastAlert.className = "auth-toast-alert success";
-        toastAlert.innerHTML = `<i class="fa-solid fa-shield-check me-2"></i>Authentication successful. Redirecting to your Legal Portal...`;
+        toastAlert.innerHTML = `<i class="fa-solid fa-shield-check me-2"></i>Authentication verified for <strong>${emailVal}</strong>. Redirecting to Chambers Dashboard...`;
       }
 
       setTimeout(() => {
-        window.location.href = "../index.html";
-      }, 1600);
+        window.location.href = "dashboard.html";
+      }, 1200);
     });
   }
 
@@ -473,6 +528,16 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       if (!isValid) return;
+
+      // Save registered profile into localStorage
+      try {
+        const regData = {
+          username: usernameInput.value.trim(),
+          role: roleInput.value,
+          email: emailInput.value.trim(),
+        };
+        localStorage.setItem("stackly_reg_user", JSON.stringify(regData));
+      } catch (err) {}
 
       // ── REQUIREMENT 8: REDIRECT TO LOGIN PAGE AFTER REGISTER SUBMIT ─────────
       const submitBtn = registerForm.querySelector(".btn-auth-submit");

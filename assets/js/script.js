@@ -759,4 +759,188 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 900);
     });
   }
+
+  // ── Global Handler: Redirect empty links and '#' to 404 Page ─────────
+  document.addEventListener("click", (e) => {
+    const link = e.target.closest("a");
+    if (!link) return;
+
+    // Skip if link has a data-page that has or will be handled
+    const dataPage = link.getAttribute("data-page");
+    if (dataPage) return;
+
+    const href = link.getAttribute("href");
+
+    // Check for empty, whitespace, hash-only, or javascript void links
+    const isPlaceholder =
+      href === null ||
+      href === "" ||
+      href.trim() === "" ||
+      href === "#" ||
+      href === "#!" ||
+      href.toLowerCase() === "javascript:void(0)" ||
+      href.toLowerCase() === "javascript:void(0);" ||
+      href.toLowerCase() === "javascript:;";
+
+    // Check for hash anchors that do not match any element on the current page
+    let isBrokenHash = false;
+    if (href && href.startsWith("#") && href.length > 1) {
+      const targetId = href.substring(1);
+      if (!document.getElementById(targetId)) {
+        isBrokenHash = true;
+      }
+    }
+
+    if (isPlaceholder || isBrokenHash) {
+      e.preventDefault();
+      const inPages = window.location.pathname
+        .toLowerCase()
+        .includes("/pages/");
+      const target404 = inPages ? "../404.html" : "404.html";
+      window.location.href = target404;
+    }
+  });
+
+  // ── 6. Executive Scroll Reveal Observer Engine ────────────────────────
+  function initScrollReveal() {
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    // Thematic selectors spanning home page and all subpages
+    const autoSelectors = [
+      ".home-hero-content",
+      ".hero-card-container",
+      ".page-banner-content",
+      "section > .container > .row:first-child",
+      "section .section-header",
+      "section .section-title",
+      "section .section-desc",
+      "section .text-center.mb-5",
+      "section .text-center.mb-4",
+      ".accreditations-bar",
+      ".accred-logo-card",
+      ".hero-stat-card",
+      ".hero-stat-matrix",
+      ".legal-card",
+      ".legal-card-dark",
+      ".pillar-card",
+      ".attorney-card",
+      ".case-study-card",
+      ".featured-article-card",
+      ".legal-article-card",
+      ".pricing-fee-card",
+      ".process-step-card",
+      ".contact-channel-card",
+      ".award-seal-card",
+      ".testimonial-card",
+      ".whitepaper-card",
+      ".timeline-milestone",
+      ".timeline-item",
+      ".london-office-map-card",
+      ".consultation-form-card",
+      ".newsletter-digest-card",
+      ".calc-container",
+      ".legal-assessment-calculator",
+      ".calc-output-card",
+      ".cta-banner",
+      ".cta-banner-content",
+      ".error-hero-card",
+      ".error-matrix-card",
+      ".error-emergency-banner",
+    ];
+
+    const explicitTargets = Array.from(
+      document.querySelectorAll(
+        ".reveal, .reveal-up, .reveal-down, .reveal-left, .reveal-right, .reveal-zoom, .reveal-fade, .section-reveal-header",
+      ),
+    );
+
+    const autoTargets = Array.from(
+      document.querySelectorAll(autoSelectors.join(", ")),
+    );
+
+    const allTargets = Array.from(
+      new Set([...explicitTargets, ...autoTargets]),
+    );
+
+    if (!allTargets.length) return;
+
+    if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+      allTargets.forEach((el) => el.classList.add("is-revealed"));
+      return;
+    }
+
+    // Auto-stagger column siblings in multi-card rows
+    document.querySelectorAll(".row").forEach((row) => {
+      const cards = row.querySelectorAll(
+        ":scope > [class*='col'] > .legal-card, " +
+          ":scope > [class*='col'] > .attorney-card, " +
+          ":scope > [class*='col'] > .case-study-card, " +
+          ":scope > [class*='col'] > .legal-article-card, " +
+          ":scope > [class*='col'] > .pricing-fee-card, " +
+          ":scope > [class*='col'] > .process-step-card, " +
+          ":scope > [class*='col'] > .contact-channel-card, " +
+          ":scope > [class*='col'] > .award-seal-card, " +
+          ":scope > [class*='col'] > .hero-stat-card, " +
+          ":scope > [class*='col'] > .accred-logo-card, " +
+          ":scope > [class*='col'] > .error-matrix-card",
+      );
+      if (cards.length > 1) {
+        cards.forEach((card, idx) => {
+          if (!card.className.includes("reveal-delay-")) {
+            const delay = Math.min((idx % 4) * 0.12, 0.48);
+            if (delay > 0) {
+              card.style.transitionDelay = `${delay}s`;
+            }
+          }
+        });
+      }
+    });
+
+    const observer = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-revealed");
+            obs.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: "0px 0px -40px 0px",
+        threshold: 0.1,
+      },
+    );
+
+    allTargets.forEach((el) => {
+      if (
+        !el.classList.contains("reveal") &&
+        !el.classList.contains("reveal-up") &&
+        !el.classList.contains("reveal-down") &&
+        !el.classList.contains("reveal-left") &&
+        !el.classList.contains("reveal-right") &&
+        !el.classList.contains("reveal-zoom") &&
+        !el.classList.contains("reveal-fade") &&
+        !el.classList.contains("section-reveal-header")
+      ) {
+        el.classList.add("reveal-up");
+      }
+
+      const rect = el.getBoundingClientRect();
+      const inViewOnLoad =
+        rect.top < window.innerHeight - 30 && rect.bottom > 0;
+      if (inViewOnLoad) {
+        setTimeout(() => {
+          el.classList.add("is-revealed");
+        }, 100);
+      } else {
+        observer.observe(el);
+      }
+    });
+  }
+
+  // Initialize Scroll Reveal
+  initScrollReveal();
 });

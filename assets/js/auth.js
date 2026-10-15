@@ -491,4 +491,78 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 1400);
     });
   }
+
+  // ── Global Handler: Redirect empty links and '#' to 404 Page ─────────
+  document.addEventListener("click", (e) => {
+    const link = e.target.closest("a");
+    if (!link) return;
+
+    const dataPage = link.getAttribute("data-page");
+    if (dataPage) return;
+
+    const href = link.getAttribute("href");
+
+    const isPlaceholder =
+      href === null ||
+      href === "" ||
+      href.trim() === "" ||
+      href === "#" ||
+      href === "#!" ||
+      href.toLowerCase() === "javascript:void(0)" ||
+      href.toLowerCase() === "javascript:void(0);" ||
+      href.toLowerCase() === "javascript:;";
+
+    let isBrokenHash = false;
+    if (href && href.startsWith("#") && href.length > 1) {
+      const targetId = href.substring(1);
+      if (!document.getElementById(targetId)) {
+        isBrokenHash = true;
+      }
+    }
+
+    if (isPlaceholder || isBrokenHash) {
+      e.preventDefault();
+      const inPages = window.location.pathname
+        .toLowerCase()
+        .includes("/pages/");
+      const target404 = inPages ? "../404.html" : "404.html";
+      window.location.href = target404;
+    }
+  });
+
+  // ── Scroll Reveal for Auth Pages ───────────────────────────────────────
+  function initAuthScrollReveal() {
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    const targets = document.querySelectorAll(
+      ".auth-panel-content, .auth-card-inner, .auth-feature-item, .auth-stat-col",
+    );
+
+    if (!targets.length) return;
+
+    if (prefersReducedMotion) {
+      targets.forEach((el) => el.classList.add("is-revealed"));
+      return;
+    }
+
+    targets.forEach((el, idx) => {
+      if (
+        !el.classList.contains("reveal-up") &&
+        !el.classList.contains("reveal-left") &&
+        !el.classList.contains("reveal-right")
+      ) {
+        el.classList.add("reveal-up");
+      }
+      setTimeout(
+        () => {
+          el.classList.add("is-revealed");
+        },
+        100 + idx * 80,
+      );
+    });
+  }
+
+  initAuthScrollReveal();
 });

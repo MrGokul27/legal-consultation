@@ -1,0 +1,768 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 - Legal Precedent Not Found | Stackly Legal Consultation</title>
+    <meta
+      name="description"
+      content="The requested legal brief, statutory citation, or chambers dossier cannot be located. Return to Stackly Legal Consultation Chambers homepage."
+    />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/webp" href="assets/images/logoStackly.webp" />
+
+    <!-- Bootstrap 5.3 CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- FontAwesome 6 Icons CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+
+    <!-- Google Fonts: Cinzel & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Master Stylesheet -->
+    <link rel="stylesheet" href="assets/css/styles.css" />
+
+    <style>
+      /* ── 404 Dedicated Luxury Styling ─────────────────────────────────────── */
+      .page-404-wrapper {
+        min-height: 100vh;
+        background-color: #040914;
+        background:
+          radial-gradient(
+            circle at 50% 18%,
+            rgba(197, 160, 89, 0.16) 0%,
+            transparent 55%
+          ),
+          radial-gradient(
+            circle at 85% 65%,
+            rgba(26, 67, 130, 0.22) 0%,
+            transparent 60%
+          ),
+          linear-gradient(160deg, #040914 0%, #071224 45%, #0b1a30 100%);
+        color: #ffffff;
+        position: relative;
+        overflow-x: hidden;
+      }
+
+      /* Neoclassical High Court Background Silhouette */
+      .error-bg-silhouette {
+        position: absolute;
+        inset: 0;
+        background: url("https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1920&q=85")
+          center/cover no-repeat;
+        opacity: 0.12;
+        mix-blend-mode: luminosity;
+        pointer-events: none;
+        z-index: 1;
+        mask-image: radial-gradient(
+          ellipse 90% 80% at 50% 40%,
+          rgba(0, 0, 0, 0.9) 10%,
+          transparent 85%
+        );
+        -webkit-mask-image: radial-gradient(
+          ellipse 90% 80% at 50% 40%,
+          rgba(0, 0, 0, 0.9) 10%,
+          transparent 85%
+        );
+      }
+
+      .error-grid-overlay {
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(197, 160, 89, 0.04) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(197, 160, 89, 0.04) 1px, transparent 1px);
+        background-size: 50px 50px;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      /* Ambient Glow Elements */
+      .error-glow-top {
+        position: absolute;
+        top: -100px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 600px;
+        height: 400px;
+        background: radial-gradient(
+          circle,
+          rgba(197, 160, 89, 0.22) 0%,
+          transparent 70%
+        );
+        filter: blur(90px);
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      /* 404 Navigation Header */
+      .error-navbar {
+        padding: 1.25rem 0;
+        border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+        background: rgba(4, 9, 20, 0.75);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        position: relative;
+        z-index: 10;
+      }
+
+      .error-brand-logo {
+        height: 46px;
+        width: auto;
+      }
+
+      .error-brand-title {
+        font-family: var(--font-heading);
+        font-size: 1.25rem;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        line-height: 1.1;
+      }
+
+      .error-brand-subtitle {
+        font-size: 0.65rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.5);
+      }
+
+      /* 404 Central Display */
+      .error-hero-card {
+        position: relative;
+        z-index: 5;
+        padding: 4rem 1.5rem 2.5rem;
+      }
+
+      .error-number-display {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1.2rem;
+        margin-bottom: 1.5rem;
+        font-family: var(--font-heading);
+        font-weight: 900;
+        line-height: 1;
+      }
+
+      .error-digit {
+        font-size: clamp(5.5rem, 15vw, 10.5rem);
+        background: linear-gradient(
+          135deg,
+          #ffffff 0%,
+          #ecd08c 35%,
+          #c5a059 70%,
+          #8c6a21 100%
+        );
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 4px 30px rgba(197, 160, 89, 0.4);
+        letter-spacing: -0.04em;
+        user-select: none;
+      }
+
+      .error-scale-centerpiece {
+        position: relative;
+        width: clamp(100px, 14vw, 150px);
+        height: clamp(100px, 14vw, 150px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .error-scale-glow-ring {
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        border: 2px dashed rgba(197, 160, 89, 0.4);
+        animation: spinClockwise 25s linear infinite;
+      }
+
+      .error-scale-inner-circle {
+        position: absolute;
+        inset: 10px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(197, 160, 89, 0.2) 0%,
+          rgba(15, 34, 63, 0.75) 100%
+        );
+        border: 1.5px solid rgba(197, 160, 89, 0.6);
+        box-shadow:
+          0 0 30px rgba(197, 160, 89, 0.35),
+          inset 0 0 20px rgba(197, 160, 89, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .error-scale-icon {
+        font-size: clamp(2.4rem, 4vw, 3.8rem);
+        color: var(--accent-gold);
+        filter: drop-shadow(0 2px 10px rgba(197, 160, 89, 0.6));
+        animation: balanceTilt 4s ease-in-out infinite alternate;
+      }
+
+      @keyframes spinClockwise {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes balanceTilt {
+        0% {
+          transform: rotate(-8deg);
+        }
+        50% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(8deg);
+        }
+      }
+
+      .error-headline {
+        font-family: var(--font-heading);
+        color: #fff;
+        font-size: clamp(2rem, 3.8vw, 3.2rem);
+        font-weight: 800;
+        letter-spacing: -0.01em;
+        line-height: 1.2;
+        margin-bottom: 1.25rem;
+      }
+
+      .error-description {
+        font-size: clamp(1rem, 1.4vw, 1.15rem);
+        color: #cbd5e1;
+        max-width: 680px;
+        margin: 0 auto 2.25rem;
+        line-height: 1.75;
+      }
+
+      /* Action Buttons */
+      .error-actions-group {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 3.5rem;
+      }
+
+      /* Interactive Registry Search Bar */
+      .error-search-container {
+        max-width: 600px;
+        margin: 0 auto 3rem;
+        background: rgba(15, 34, 63, 0.65);
+        border: 1px solid rgba(197, 160, 89, 0.35);
+        border-radius: 50px;
+        padding: 0.4rem 0.5rem 0.4rem 1.4rem;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+        transition: var(--transition-smooth);
+      }
+
+      .error-search-container:focus-within {
+        border-color: var(--accent-gold);
+        box-shadow: 0 0 25px rgba(197, 160, 89, 0.3);
+      }
+
+      .error-search-input {
+        background: transparent;
+        border: none;
+        outline: none;
+        color: #ffffff;
+        font-size: 0.95rem;
+        width: 100%;
+      }
+
+      .error-search-input::placeholder {
+        color: rgba(255, 255, 255, 0.45);
+      }
+
+      .error-search-btn {
+        background: var(--accent-gold);
+        color: var(--primary-dark);
+        border: none;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 0.85rem;
+        padding: 0.65rem 1.4rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: var(--transition-smooth);
+      }
+
+      .error-search-btn:hover {
+        background: #e8c985;
+        transform: translateY(-1px);
+        color: #040914;
+      }
+
+      /* Quick Links Matrix */
+      .error-quick-matrix {
+        max-width: 1020px;
+        margin: 0 auto 3.5rem;
+      }
+
+      .error-matrix-card {
+        background: rgba(15, 34, 63, 0.5);
+        border: 1px solid rgba(197, 160, 89, 0.2);
+        border-radius: var(--radius-md);
+        padding: 1.5rem;
+        text-align: left;
+        transition: var(--transition-smooth);
+        text-decoration: none;
+        display: block;
+        height: 100%;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+
+      .error-matrix-card:hover {
+        background: rgba(20, 42, 77, 0.8);
+        border-color: var(--accent-gold);
+        transform: translateY(-5px);
+        box-shadow:
+          0 15px 35px rgba(0, 0, 0, 0.4),
+          0 0 20px rgba(197, 160, 89, 0.15);
+      }
+
+      .matrix-card-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+        background: rgba(197, 160, 89, 0.12);
+        border: 1px solid rgba(197, 160, 89, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--accent-gold);
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+        transition: var(--transition-smooth);
+      }
+
+      .error-matrix-card:hover .matrix-card-icon {
+        background: var(--accent-gold);
+        color: var(--primary-dark);
+        transform: scale(1.05);
+      }
+
+      .matrix-card-title {
+        color: #ffffff;
+        font-size: 1.05rem;
+        font-weight: 700;
+        margin-bottom: 0.4rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .matrix-card-title i {
+        font-size: 0.8rem;
+        opacity: 0.5;
+        transition: var(--transition-smooth);
+      }
+
+      .error-matrix-card:hover .matrix-card-title i {
+        opacity: 1;
+        color: var(--accent-gold);
+        transform: translateX(3px);
+      }
+
+      .matrix-card-desc {
+        color: #94a3b8;
+        font-size: 0.82rem;
+        line-height: 1.5;
+        margin-bottom: 0;
+      }
+
+      /* Emergency Hotline Box */
+      .error-emergency-banner {
+        max-width: 860px;
+        margin: 0 auto;
+        background: linear-gradient(
+          135deg,
+          rgba(15, 34, 63, 0.7) 0%,
+          rgba(6, 14, 26, 0.85) 100%
+        );
+        border: 1px solid rgba(197, 160, 89, 0.3);
+        border-radius: var(--radius-md);
+        padding: 1.25rem 2rem;
+        backdrop-filter: blur(12px);
+      }
+
+      /* 404 Site Footer */
+      .error-footer {
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        background: #02060e;
+        padding: 2rem 0;
+        position: relative;
+        z-index: 10;
+        color: rgba(255, 255, 255, 0.55);
+        font-size: 0.85rem;
+      }
+
+      .error-footer a {
+        color: rgba(255, 255, 255, 0.6);
+        text-decoration: none;
+        transition: var(--transition-smooth);
+      }
+
+      .error-footer a:hover {
+        color: var(--accent-gold);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-404-wrapper d-flex flex-column justify-content-between">
+      <!-- Background Ambient Glow & Silhouette -->
+      <div class="error-glow-top"></div>
+      <div class="error-bg-silhouette"></div>
+      <div class="error-grid-overlay"></div>
+
+      <!-- ── TOP NAVIGATION HEADER WITH OFFICIAL LOGO ───────────────────────── -->
+      <header class="error-navbar">
+        <div class="container">
+          <div class="d-flex justify-content-between align-items-center">
+            <!-- Brand Logo & Chambers Designation -->
+            <a
+              href="index.html"
+              class="d-flex align-items-center gap-3 text-decoration-none"
+              title="Return to Stackly Legal Homepage"
+            >
+              <img
+                src="assets/images/logoStackly.webp"
+                alt="Stackly Legal Consultation Logo"
+                class="error-brand-logo"
+              />
+            </a>
+
+            <!-- Direct Actions -->
+            <div class="d-flex align-items-center gap-3">
+              <a
+                href="pages/login.html"
+                class="btn btn-outline-gold btn-sm d-none d-md-inline-flex align-items-center gap-2"
+              >
+                <i class="fa-solid fa-lock fs-8"></i>
+                <span>Client Portal</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- ── MAIN 404 CONTENT CONTAINER ─────────────────────────────────────── -->
+      <main class="error-hero-card text-center my-auto">
+        <div class="container position-relative z-3">
+          <!-- Official Legal Privilege Pill -->
+          <div class="hero-prestige-pill mb-4 mx-auto animate-fade-in">
+            <span class="hero-pulse-dot"></span>
+            <span class="pill-bold">
+              <i class="fa-solid fa-gavel text-gold me-1"></i> STATUS CODE: 404
+            </span>
+            <span class="pill-divider"></span>
+            <span class="pill-text"
+              >MATTER RECORD VOID &bull; CITATION UNRESOLVED</span
+            >
+          </div>
+
+          <!-- Monumental 404 Judicial Display with Animated Balance Scales -->
+          <div
+            class="error-number-display"
+            aria-label="Error 404: Case File Not Found"
+          >
+            <span class="error-digit">4</span>
+            <div
+              class="error-scale-centerpiece"
+              title="Scales of Justice - Unresolved Precedent"
+            >
+              <div class="error-scale-glow-ring"></div>
+              <div class="error-scale-inner-circle">
+                <i class="fa-solid fa-scale-unbalanced error-scale-icon"></i>
+              </div>
+            </div>
+            <span class="error-digit">4</span>
+          </div>
+
+          <!-- Main Thematic Headline -->
+          <h1 class="error-headline">
+            Legal Record Not Found.<br />
+            <span class="hero-gold-text"
+              >Citation Outside Chambers Jurisdiction.</span
+            >
+          </h1>
+
+          <!-- Authoritative Subtitle Copy -->
+          <p class="error-description">
+            The legal brief, statutory citation, or chambers dossier you
+            attempted to summon is not catalogued in the Stackly Legal registry.
+            The file may have expired under statutory limitation, been
+            transferred under sealed protective order, or the document locator
+            is invalid.
+          </p>
+
+          <!-- Core Call to Action Buttons: Homepage Redirection & Go Back -->
+          <div class="error-actions-group">
+            <!-- 1. Home Page Redirection Button -->
+            <a href="index.html" class="btn btn-hero-gold" id="returnHomeBtn">
+              <i class="fa-solid fa-house me-2"></i>Return to Homepage
+              <i class="fa-solid fa-arrow-right ms-2 btn-arrow"></i>
+            </a>
+
+            <!-- 2. Go Back Button with History Fallback -->
+            <button
+              type="button"
+              class="btn btn-hero-outline"
+              id="goBackBtn"
+              onclick="handleGoBack()"
+            >
+              <i class="fa-solid fa-arrow-left me-2"></i>Go Back to Previous
+              File
+            </button>
+          </div>
+
+          <!-- Chambers Quick Re-routing Matrix (4 Core Pillars) -->
+          <div class="error-quick-matrix">
+            <div class="row g-3">
+              <div class="col-lg-3 col-md-6 col-12">
+                <a href="pages/services.html" class="error-matrix-card">
+                  <div class="matrix-card-icon">
+                    <i class="fa-solid fa-briefcase"></i>
+                  </div>
+                  <div class="matrix-card-title">
+                    <span>Corporate Advisory</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                  </div>
+                  <p class="matrix-card-desc">
+                    Cross-border M&amp;A transactions, PE structuring, and
+                    boardroom compliance.
+                  </p>
+                </a>
+              </div>
+              <div class="col-lg-3 col-md-6 col-12">
+                <a href="pages/portfolio.html" class="error-matrix-card">
+                  <div class="matrix-card-icon">
+                    <i class="fa-solid fa-landmark"></i>
+                  </div>
+                  <div class="matrix-card-title">
+                    <span>Track Record</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                  </div>
+                  <p class="matrix-card-desc">
+                    High Court precedents, multi-million pound recoveries, and
+                    landmark rulings.
+                  </p>
+                </a>
+              </div>
+              <div class="col-lg-3 col-md-6 col-12">
+                <a href="pages/about.html" class="error-matrix-card">
+                  <div class="matrix-card-icon">
+                    <i class="fa-solid fa-user-tie"></i>
+                  </div>
+                  <div class="matrix-card-title">
+                    <span>Senior Partners</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                  </div>
+                  <p class="matrix-card-desc">
+                    Meet King's Counsel (KC) barristers and seasoned City of
+                    London solicitors.
+                  </p>
+                </a>
+              </div>
+              <div class="col-lg-3 col-md-6 col-12">
+                <a href="pages/login.html" class="error-matrix-card">
+                  <div class="matrix-card-icon">
+                    <i class="fa-solid fa-shield-halved"></i>
+                  </div>
+                  <div class="matrix-card-title">
+                    <span>Client Portal</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                  </div>
+                  <p class="matrix-card-desc">
+                    Encrypted 256-bit workstation for authenticated active
+                    litigation files.
+                  </p>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Emergency Legal Assistance Banner -->
+          <div
+            class="error-emergency-banner d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 text-start"
+          >
+            <div class="d-flex align-items-center gap-3">
+              <div class="text-gold fs-2">
+                <i class="fa-solid fa-phone-volume"></i>
+              </div>
+              <div>
+                <h6 class="text-white mb-1 fw-bold">
+                  Emergency Injunction or Urgent Counsel Required?
+                </h6>
+                <p class="text-white-50 fs-8 mb-0">
+                  Our 24/7 Holborn Chambers duty clerk routes high-priority
+                  briefs immediately.
+                </p>
+              </div>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+              <a
+                href="#"
+                class="btn btn-gold btn-sm px-3 py-2 fw-bold text-nowrap"
+              >
+                <i class="fa-solid fa-phone me-1"></i> +91 9876543210
+              </a>
+              <a
+                href="pages/contact.html"
+                class="btn btn-outline-gold btn-sm px-3 py-2 text-nowrap"
+              >
+                Emergency Intake
+              </a>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Bootstrap 5.3 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Self-Contained 404 Interaction Handler (Go Back, Home Redirect, Registry Search) -->
+    <script>
+      // 1. Go Back Button with fallback to Homepage
+      function handleGoBack() {
+        if (document.referrer && window.history.length > 1) {
+          window.history.back();
+        } else {
+          window.location.href = "index.html";
+        }
+      }
+
+      // 2. Interactive Registry Search Handler
+      function executeRegistrySearch() {
+        const queryInput = document.getElementById("docketSearchInput");
+        if (!queryInput) return;
+        const q = queryInput.value.trim().toLowerCase();
+
+        if (!q) {
+          queryInput.focus();
+          return;
+        }
+
+        if (
+          q.includes("corp") ||
+          q.includes("merg") ||
+          q.includes("m&a") ||
+          q.includes("service") ||
+          q.includes("practice") ||
+          q.includes("tax")
+        ) {
+          window.location.href = "pages/services.html";
+        } else if (
+          q.includes("litigat") ||
+          q.includes("dispute") ||
+          q.includes("court") ||
+          q.includes("case") ||
+          q.includes("record") ||
+          q.includes("verdict")
+        ) {
+          window.location.href = "pages/portfolio.html";
+        } else if (
+          q.includes("partner") ||
+          q.includes("about") ||
+          q.includes("lawyer") ||
+          q.includes("barrister") ||
+          q.includes("chambers") ||
+          q.includes("kc")
+        ) {
+          window.location.href = "pages/about.html";
+        } else if (
+          q.includes("insight") ||
+          q.includes("blog") ||
+          q.includes("news") ||
+          q.includes("precedent") ||
+          q.includes("article")
+        ) {
+          window.location.href = "pages/blog.html";
+        } else if (
+          q.includes("login") ||
+          q.includes("portal") ||
+          q.includes("sign") ||
+          q.includes("auth") ||
+          q.includes("register")
+        ) {
+          window.location.href = "pages/login.html";
+        } else {
+          window.location.href = "pages/contact.html";
+        }
+      }
+
+      // Trigger search on Enter key
+      const docketInput = document.getElementById("docketSearchInput");
+      if (docketInput) {
+        docketInput.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            executeRegistrySearch();
+          }
+        });
+      }
+
+      // 3. Global empty/# click handler on 404 page itself
+      document.addEventListener("click", (e) => {
+        const link = e.target.closest("a");
+        if (!link) return;
+
+        const href = link.getAttribute("href");
+        if (
+          href === "" ||
+          href === "#" ||
+          href === "#!" ||
+          href === null ||
+          href.trim() === "" ||
+          href.toLowerCase() === "javascript:void(0)"
+        ) {
+          e.preventDefault();
+          window.location.href = "index.html";
+        }
+      });
+
+      // 4. Scroll Reveal Entrance Animation
+      function init404ScrollReveal() {
+        const elements = document.querySelectorAll(
+          ".hero-prestige-pill, .error-number-display, .error-headline, .error-description, .error-actions-group, .error-search-container, .error-matrix-card, .error-emergency-banner",
+        );
+        elements.forEach((el, idx) => {
+          el.classList.add("reveal-up");
+          setTimeout(
+            () => {
+              el.classList.add("is-revealed");
+            },
+            80 + idx * 70,
+          );
+        });
+      }
+      init404ScrollReveal();
+    </script>
+  </body>
+</html>

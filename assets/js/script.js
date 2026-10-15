@@ -15,6 +15,109 @@ document.addEventListener("DOMContentLoaded", () => {
     return hash ? `${href}#${hash}` : href;
   }
 
+  // ── 0. Thematic Legal Chambers Preloader (2.0s Duration) ─────────
+  function initPreloader() {
+    const preloader = document.getElementById("preloader");
+    if (!preloader) return;
+
+    // Ensure body scroll is locked during preloading
+    document.body.classList.add("preloader-active");
+
+    const barFill = document.getElementById("preloaderBarFill");
+    const counter = document.getElementById("preloaderCounter");
+    const statusText = document.getElementById("preloaderStatusText");
+
+    const duration = 2000; // 2.0 seconds exact duration
+    const startTime = performance.now();
+
+    const statusMilestones = [
+      { threshold: 0.0, text: "INITIALISING SECURE LEGAL PRIVILEGE" },
+      { threshold: 0.25, text: "AUTHENTICATING SRA CREDENTIALS #589214" },
+      { threshold: 0.55, text: "CONVENING SENIOR PARTNER COUNSEL" },
+      { threshold: 0.85, text: "SYNCHRONISING CHAMBERS DOSSIERS" },
+      { threshold: 0.98, text: "CHAMBERS ACCESS GRANTED • WELCOME" },
+    ];
+
+    let currentMilestoneIndex = 0;
+    let isFinished = false;
+
+    function finish() {
+      if (isFinished) return;
+      isFinished = true;
+
+      if (barFill) barFill.style.width = "100%";
+      if (counter) counter.textContent = "100%";
+      if (statusText) {
+        statusText.textContent = "CHAMBERS ACCESS GRANTED • WELCOME";
+        statusText.style.opacity = "1";
+      }
+
+      preloader.classList.add("preloader-complete");
+
+      // Brief elegant celebration before smooth reveal transition (160ms)
+      setTimeout(() => {
+        preloader.classList.add("preloader-finished");
+        document.body.classList.remove("preloader-active");
+
+        // Clean up from render tree once transition ends
+        setTimeout(() => {
+          preloader.style.display = "none";
+          preloader.setAttribute("aria-hidden", "true");
+          window.dispatchEvent(new CustomEvent("preloaderDismissed"));
+        }, 700);
+      }, 160);
+    }
+
+    function step(now) {
+      if (isFinished) return;
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1.0);
+      const percent = Math.min(Math.floor(progress * 100), 100);
+
+      if (barFill) {
+        barFill.style.width = `${percent}%`;
+      }
+      if (counter) {
+        counter.textContent = `${percent}%`;
+      }
+
+      // Check milestones
+      for (let i = statusMilestones.length - 1; i >= 0; i--) {
+        if (progress >= statusMilestones[i].threshold) {
+          if (currentMilestoneIndex !== i) {
+            currentMilestoneIndex = i;
+            if (statusText) {
+              statusText.style.opacity = "0.2";
+              setTimeout(() => {
+                if (statusText && !isFinished) {
+                  statusText.textContent = statusMilestones[i].text;
+                  statusText.style.opacity = "1";
+                }
+              }, 90);
+            }
+          }
+          break;
+        }
+      }
+
+      if (progress < 1.0) {
+        requestAnimationFrame(step);
+      } else {
+        finish();
+      }
+    }
+
+    requestAnimationFrame(step);
+
+    // Safeguard: tab backgrounded or low priority RAF fallback
+    setTimeout(() => {
+      if (!isFinished) finish();
+    }, 2800);
+  }
+
+  // Run preloader immediately
+  initPreloader();
+
   // Fallback HTML definitions in case fetch fails under file:// protocol
   const fallbackHeaderHtml = `
     <!-- Topbar -->

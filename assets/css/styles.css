@@ -1935,3 +1935,500 @@ img {
     transition: none !important;
   }
 }
+
+/* ════════════════════════════════════════════════════════════════════════════
+   THEMATIC PRELOADER: STACKLY LEGAL CONSULTATION (PREMIER CHAMBERS)
+   ════════════════════════════════════════════════════════════════════════════ */
+
+body.preloader-active {
+  overflow: hidden !important;
+  height: 100vh !important;
+}
+
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  background-color: #060e1a;
+  background-image: radial-gradient(
+    circle at 50% 40%,
+    rgba(15, 34, 63, 0.95) 0%,
+    rgba(8, 19, 36, 0.98) 60%,
+    #030811 100%
+  );
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.preloader.preloader-finished {
+  opacity: 0 !important;
+  transform: scale(1.03) !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+
+/* ── Filigree Corner Brackets ─────────────────────────── */
+.preloader-corner {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  pointer-events: none;
+  opacity: 0.65;
+  transition: opacity 0.3s ease;
+}
+
+.preloader-corner-tl {
+  top: 24px;
+  left: 24px;
+  border-top: 1.5px solid var(--accent-gold);
+  border-left: 1.5px solid var(--accent-gold);
+}
+
+.preloader-corner-tr {
+  top: 24px;
+  right: 24px;
+  border-top: 1.5px solid var(--accent-gold);
+  border-right: 1.5px solid var(--accent-gold);
+}
+
+.preloader-corner-bl {
+  bottom: 24px;
+  left: 24px;
+  border-bottom: 1.5px solid var(--accent-gold);
+  border-left: 1.5px solid var(--accent-gold);
+}
+
+.preloader-corner-br {
+  bottom: 24px;
+  right: 24px;
+  border-bottom: 1.5px solid var(--accent-gold);
+  border-right: 1.5px solid var(--accent-gold);
+}
+
+.preloader-corner .corner-diamond {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background-color: var(--accent-gold);
+  transform: rotate(45deg);
+}
+
+.preloader-corner-tl .corner-diamond {
+  top: -3px;
+  left: -3px;
+}
+.preloader-corner-tr .corner-diamond {
+  top: -3px;
+  right: -3px;
+}
+.preloader-corner-bl .corner-diamond {
+  bottom: -3px;
+  left: -3px;
+}
+.preloader-corner-br .corner-diamond {
+  bottom: -3px;
+  right: -3px;
+}
+
+/* ── Atmospheric Watermark & Glow ───────────────────────── */
+.preloader-watermark {
+  position: absolute;
+  width: min(85vw, 680px);
+  height: min(85vw, 680px);
+  border-radius: 50%;
+  border: 1px dashed rgba(197, 160, 89, 0.08);
+  box-shadow:
+    inset 0 0 120px rgba(11, 26, 48, 0.6),
+    0 0 0 35px rgba(197, 160, 89, 0.02),
+    0 0 0 75px rgba(197, 160, 89, 0.015);
+  pointer-events: none;
+  animation: preloaderWatermarkSpin 55s linear infinite;
+}
+
+.preloader-glow-orb {
+  position: absolute;
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(197, 160, 89, 0.2) 0%,
+    rgba(197, 160, 89, 0.05) 50%,
+    transparent 72%
+  );
+  filter: blur(30px);
+  pointer-events: none;
+  animation: preloaderPulseGlow 3s ease-in-out infinite alternate;
+}
+
+/* ── Preloader Content Stack ───────────────────────────── */
+.preloader-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  max-width: 540px;
+  width: 100%;
+}
+
+/* ── SRA Regulatory Beacon Pill ────────────────────────── */
+.preloader-prestige-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: rgba(197, 160, 89, 0.08);
+  border: 1px solid rgba(197, 160, 89, 0.28);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  margin-bottom: 20px;
+}
+
+.preloader-pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--accent-gold);
+  box-shadow: 0 0 10px var(--accent-gold);
+  animation: preloaderBeaconPulse 1.8s ease-in-out infinite;
+}
+
+.preloader-pill-text {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: #dfba73;
+  font-family: var(--font-body);
+  text-transform: uppercase;
+}
+
+/* ── SVG Emblem & Legal Scales ─────────────────────────── */
+.preloader-emblem-wrap {
+  position: relative;
+  width: 130px;
+  height: 130px;
+  margin: 0 auto 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.5));
+  transition: filter 0.4s ease;
+}
+
+.preloader.preloader-complete .preloader-emblem-wrap {
+  filter: drop-shadow(0 0 35px rgba(197, 160, 89, 0.85))
+    drop-shadow(0 10px 25px rgba(0, 0, 0, 0.5));
+}
+
+.preloader-crest-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.preloader-orbit-ring {
+  transform-origin: 80px 80px;
+  animation: preloaderOrbitSpin 16s linear infinite;
+}
+
+.preloader-scales-balance {
+  transform-origin: 80px 50px;
+  animation: preloaderBeamRock 2s cubic-bezier(0.45, 0.05, 0.55, 0.95) forwards;
+}
+
+.preloader-scale-pan-left {
+  transform-origin: 38px 50px;
+  animation: preloaderPanLeftCounter 2s cubic-bezier(0.45, 0.05, 0.55, 0.95)
+    forwards;
+}
+
+.preloader-scale-pan-right {
+  transform-origin: 122px 50px;
+  animation: preloaderPanRightCounter 2s cubic-bezier(0.45, 0.05, 0.55, 0.95)
+    forwards;
+}
+
+/* ── Brand Typography ─────────────────────────────────── */
+.preloader-brand {
+  margin-bottom: 22px;
+}
+
+.preloader-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.6rem, 3.8vw, 2.2rem);
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.22em;
+  margin: 0 0 6px 0;
+  line-height: 1.15;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+}
+
+.preloader-gold-title {
+  background: linear-gradient(
+    135deg,
+    #fff3d2 0%,
+    #dfba73 35%,
+    #c5a059 70%,
+    #9e7a32 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.preloader-tagline {
+  font-family: var(--font-heading);
+  font-size: clamp(0.68rem, 1.4vw, 0.78rem);
+  font-weight: 500;
+  letter-spacing: 0.26em;
+  color: rgba(245, 238, 223, 0.65);
+  margin: 0 auto;
+  text-transform: uppercase;
+}
+
+/* ── 2-Second Progress System ─────────────────────────── */
+.preloader-progress-box {
+  width: 320px;
+  max-width: calc(100vw - 48px);
+  margin: 0 auto 20px;
+}
+
+.preloader-status-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 0.68rem;
+  font-family: var(--font-body);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.preloader-status-text {
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 500;
+  transition: opacity 0.15s ease;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 80%;
+}
+
+.preloader-counter {
+  color: var(--accent-gold);
+  font-weight: 700;
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
+  font-size: 0.72rem;
+}
+
+.preloader-bar-track {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 99px;
+  position: relative;
+  border: 1px solid rgba(197, 160, 89, 0.25);
+  overflow: visible;
+}
+
+.preloader-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(
+    90deg,
+    #876527 0%,
+    #c5a059 40%,
+    #fff1ce 70%,
+    #c5a059 100%
+  );
+  box-shadow: 0 0 14px rgba(197, 160, 89, 0.6);
+  border-radius: 99px;
+  position: relative;
+  transition: width 0.04s linear;
+}
+
+.preloader-bar-flare {
+  position: absolute;
+  right: -4px;
+  top: -4px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow:
+    0 0 10px 2px #dfba73,
+    0 0 4px #ffffff;
+}
+
+/* ── Security Assurance Footer ────────────────────────── */
+.preloader-security-note {
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0.15em;
+  font-weight: 500;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ── Keyframe Animations ───────────────────────────────── */
+@keyframes preloaderBeaconPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 6px var(--accent-gold);
+  }
+  50% {
+    transform: scale(1.35);
+    box-shadow: 0 0 14px 2px var(--accent-gold);
+  }
+}
+
+@keyframes preloaderPulseGlow {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+}
+
+@keyframes preloaderWatermarkSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes preloaderOrbitSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes preloaderBeamRock {
+  0% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(-3.5deg);
+  }
+  46% {
+    transform: rotate(2.8deg);
+  }
+  70% {
+    transform: rotate(-1.4deg);
+  }
+  86% {
+    transform: rotate(0.6deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes preloaderPanLeftCounter {
+  0% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(3.5deg);
+  }
+  46% {
+    transform: rotate(-2.8deg);
+  }
+  70% {
+    transform: rotate(1.4deg);
+  }
+  86% {
+    transform: rotate(-0.6deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes preloaderPanRightCounter {
+  0% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(3.5deg);
+  }
+  46% {
+    transform: rotate(-2.8deg);
+  }
+  70% {
+    transform: rotate(1.4deg);
+  }
+  86% {
+    transform: rotate(-0.6deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .preloader-corner {
+    width: 28px;
+    height: 28px;
+  }
+  .preloader-corner-tl {
+    top: 14px;
+    left: 14px;
+  }
+  .preloader-corner-tr {
+    top: 14px;
+    right: 14px;
+  }
+  .preloader-corner-bl {
+    bottom: 14px;
+    left: 14px;
+  }
+  .preloader-corner-br {
+    bottom: 14px;
+    right: 14px;
+  }
+  .preloader-emblem-wrap {
+    width: 110px;
+    height: 110px;
+    margin-bottom: 14px;
+  }
+  .preloader-progress-box {
+    width: 270px;
+  }
+  .preloader-security-note {
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+  }
+}

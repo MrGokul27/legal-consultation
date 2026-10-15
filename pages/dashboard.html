@@ -132,7 +132,7 @@
 
           <div class="topbar-right">
             <!-- Fast Role Switcher Dropdown (Allows testing and previewing all 4 roles effortlessly) -->
-            <div class="dropdown role-switcher-dropdown">
+            <!-- <div class="dropdown role-switcher-dropdown">
               <button
                 class="btn btn-role-switch dropdown-toggle"
                 type="button"
@@ -142,7 +142,7 @@
               >
                 <i class="fa-solid fa-user-gear text-gold"></i>
                 <span
-                  >Role:
+                  ><span class="d-none d-sm-inline">Role: </span>
                   <strong id="topbarRoleBadge">General Counsel</strong></span
                 >
               </button>
@@ -196,17 +196,11 @@
                   </button>
                 </li>
               </ul>
-            </div>
+            </div> -->
 
             <!-- User Menu / Logout -->
             <div class="dropdown user-dropdown">
-              <button
-                class="user-btn dropdown-toggle"
-                type="button"
-                id="userDropdownBtn"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
+              <button class="user-btn" type="button">
                 <div class="user-avatar-sm" id="topbarAvatar">SL</div>
                 <span
                   class="user-name-text fs-8 fw-semibold"
@@ -214,31 +208,6 @@
                   >counsel@enterprise.co.uk</span
                 >
               </button>
-              <ul
-                class="dropdown-menu dropdown-menu-end"
-                aria-labelledby="userDropdownBtn"
-              >
-                <li>
-                  <h6 class="dropdown-header text-gold">Chambers Session</h6>
-                </li>
-                <li>
-                  <a class="dropdown-item" href="login.html">
-                    <i class="fa-solid fa-user-pen me-2 text-gold"></i>Switch
-                    Credentials
-                  </a>
-                </li>
-                <li><hr class="dropdown-divider border-secondary" /></li>
-                <li>
-                  <button
-                    class="dropdown-item text-danger btn-logout"
-                    type="button"
-                    data-action="logout"
-                  >
-                    <i class="fa-solid fa-arrow-right-from-bracket me-2"></i
-                    >Sign Out
-                  </button>
-                </li>
-              </ul>
             </div>
           </div>
         </header>
@@ -635,20 +604,29 @@
                         class="p-3 bg-navy rounded border border-secondary mb-2"
                       >
                         <div
-                          class="d-flex align-items-center gap-2 fs-8 text-white"
+                          class="d-flex align-items-center justify-content-between flex-wrap gap-2 fs-8 text-white"
                         >
-                          <i class="fa-solid fa-file-pdf text-danger fs-5"></i>
-                          <div class="flex-grow-1">
-                            <strong
-                              >Chambers_Advice_Sequana_Duties_Signed.pdf</strong
-                            >
-                            <div class="text-muted fs-9">
-                              SHA-256: 4e8b91a0c23d4f828751... (Verified)
+                          <div
+                            class="d-flex align-items-center gap-2 flex-grow-1"
+                            style="min-width: 0"
+                          >
+                            <i
+                              class="fa-solid fa-file-pdf text-danger fs-5 flex-shrink-0"
+                            ></i>
+                            <div class="flex-grow-1" style="min-width: 0">
+                              <strong
+                                class="d-block text-truncate"
+                                title="Chambers_Advice_Sequana_Duties_Signed.pdf"
+                                >Chambers_Advice_Sequana_Duties_Signed.pdf</strong
+                              >
+                              <div class="text-muted fs-9 text-truncate">
+                                SHA-256: 4e8b91a0c23d4f828751... (Verified)
+                              </div>
                             </div>
                           </div>
                           <button
                             type="button"
-                            class="btn btn-gold btn-sm-action"
+                            class="btn btn-gold btn-sm-action flex-shrink-0"
                           >
                             Download PDF
                           </button>
@@ -979,7 +957,7 @@
                       <span class="text-dim fs-8 text-uppercase"
                         >Spend Cap: £220,000</span
                       >
-                      <h2 class="text-emerald font-heading my-2">-£35,500</h2>
+                      <h2 class="text-white font-heading my-2">-£35,500</h2>
                       <p class="text-muted fs-8 mb-0">
                         Favorable budget variance to forecast
                       </p>

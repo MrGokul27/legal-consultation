@@ -434,6 +434,24 @@ document.addEventListener("DOMContentLoaded", () => {
     sidebarOverlay.addEventListener("click", closeMobileSidebar);
   }
 
+  // Close mobile sidebar on Escape key
+  document.addEventListener("keydown", (e) => {
+    if (
+      e.key === "Escape" &&
+      dashboardSidebar &&
+      dashboardSidebar.classList.contains("show")
+    ) {
+      closeMobileSidebar();
+    }
+  });
+
+  // Automatically reset mobile sidebar if viewport expands to desktop
+  window.addEventListener("resize", () => {
+    if (window.innerWidth >= 992) {
+      closeMobileSidebar();
+    }
+  });
+
   // ── REQUIREMENT 7: 404 REDIRECTION ENGINE ──────────────────────────────
   // "Dashboard all the empty links, # and buttons click and redirect to 404 page,
   // just add a script for that. the sidebar menu or logout button should not redirect to 404 page."

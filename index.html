@@ -701,7 +701,7 @@
                   </div>
 
                   <!-- Intake Form -->
-                  <form id="heroQuickForm">
+                  <form id="heroQuickForm" action="404.html">
                     <div class="form-group-wrap mb-3">
                       <span class="input-icon"
                         ><i class="fa-solid fa-user-tie"></i
@@ -709,7 +709,25 @@
                       <input
                         type="text"
                         class="form-control hero-input"
+                        id="heroName"
+                        name="fullName"
                         placeholder="Full Legal / Corporate Name"
+                        pattern="[A-Za-z\s]+"
+                        maxlength="16"
+                        title="Only alphabets and spaces are allowed"
+                        onkeydown="
+                          if (
+                            !/^[a-zA-Z\s]$/.test(event.key) &&
+                            event.key.length === 1 &&
+                            !event.ctrlKey &&
+                            !event.metaKey &&
+                            !event.altKey
+                          )
+                            event.preventDefault();
+                        "
+                        oninput="
+                          this.value = this.value.replace(/[^a-zA-Z\s]/g, '')
+                        "
                         required
                       />
                     </div>
@@ -721,6 +739,8 @@
                       <input
                         type="email"
                         class="form-control hero-input"
+                        id="heroEmail"
+                        name="email"
                         placeholder="Corporate / Direct Email"
                         required
                       />
@@ -733,6 +753,7 @@
                       <select
                         class="form-select hero-select"
                         id="heroPracticeSelect"
+                        name="practiceArea"
                         required
                       >
                         <option value="corporate" selected>
@@ -763,8 +784,25 @@
                       <input
                         type="tel"
                         class="form-control hero-input"
-                        value="+91 9876543210"
+                        id="heroPhone"
+                        name="phone"
                         placeholder="Direct Contact Number"
+                        inputmode="numeric"
+                        minlength="10"
+                        maxlength="10"
+                        pattern="[0-9]+"
+                        title="Only numbers are allowed"
+                        onkeydown="
+                          if (
+                            !/^[0-9]$/.test(event.key) &&
+                            event.key.length === 1 &&
+                            !event.ctrlKey &&
+                            !event.metaKey &&
+                            !event.altKey
+                          )
+                            event.preventDefault();
+                        "
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                         required
                       />
                     </div>
@@ -781,6 +819,7 @@
                             name="heroUrgency"
                             value="standard"
                             checked
+                            required
                           />
                           <span class="urgency-pill">Standard (24h)</span>
                         </label>
@@ -789,6 +828,7 @@
                             type="radio"
                             name="heroUrgency"
                             value="priority"
+                            required
                           />
                           <span class="urgency-pill priority"
                             >Priority (6h)</span
@@ -799,6 +839,7 @@
                             type="radio"
                             name="heroUrgency"
                             value="emergency"
+                            required
                           />
                           <span class="urgency-pill emergency"
                             >Emergency (2h)</span

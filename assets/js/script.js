@@ -9,6 +9,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let href;
     if (page === "index") {
       href = `${root}index.html`;
+    } else if (page === "404") {
+      href = `${root}404.html`;
     } else {
       href = `${pagesPrefix}${page}.html`;
     }
@@ -289,7 +291,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <div class="footer-newsletter">
                 <h6 class="text-white mb-2 fs-7 text-uppercase fw-bold">Legal Briefing Dispatch</h6>
                 <p class="text-white-50 fs-8 mb-2">Receive curated statutory alerts and landmark High Court analysis directly.</p>
-                <form class="newsletter-form d-flex gap-2" onsubmit="event.preventDefault(); alert('Thank you for subscribing to Stackly Legal Insights briefing.');">
+                <form class="newsletter-form d-flex gap-2" id="footerNewsletterForm" onsubmit="event.preventDefault(); const inPages = window.location.pathname.toLowerCase().includes('/pages/'); window.location.href = inPages ? '../404.html' : '404.html';">
                   <input type="email" class="form-control form-control-sm newsletter-input" placeholder="Work email address" required>
                   <button type="submit" class="btn btn-gold btn-sm px-3" aria-label="Subscribe to legal newsletter"><i class="fa-solid fa-paper-plane"></i></button>
                 </form>
@@ -483,6 +485,23 @@ document.addEventListener("DOMContentLoaded", () => {
           top: 0,
           behavior: "smooth",
         });
+      });
+    }
+
+    // Footer Newsletter Form: redirect to 404 page on submit
+    const footerNewsletterForm =
+      (footerContainer && footerContainer.querySelector(".newsletter-form")) ||
+      document.querySelector(".site-footer .newsletter-form") ||
+      document.getElementById("footerNewsletterForm");
+
+    if (footerNewsletterForm) {
+      footerNewsletterForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (!footerNewsletterForm.checkValidity()) {
+          footerNewsletterForm.reportValidity();
+          return;
+        }
+        window.location.href = getUrl("404");
       });
     }
   }
@@ -761,28 +780,149 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // 4. Consultation Booking / Contact Form Simulated Handler
+  // ── Input Restrictors: Letters-only & Digits-only ──────────────────
+  function setupAlphabetsOnlyInput(input) {
+    if (!input) return;
+
+    input.addEventListener("keydown", (e) => {
+      // Allow control/navigation keys
+      if (
+        e.key === "Backspace" ||
+        e.key === "Tab" ||
+        e.key === "Enter" ||
+        e.key === "Escape" ||
+        e.key === "Delete" ||
+        e.key === "ArrowLeft" ||
+        e.key === "ArrowRight" ||
+        e.key === "ArrowUp" ||
+        e.key === "ArrowDown" ||
+        e.key === "Home" ||
+        e.key === "End"
+      ) {
+        return;
+      }
+      // Allow shortcuts (Ctrl+A, Ctrl+C, Ctrl+V, etc.)
+      if (e.ctrlKey || e.metaKey) {
+        return;
+      }
+      // Prevent key if not a letter or space
+      if (e.key && e.key.length === 1) {
+        if (!/^[a-zA-Z\s]$/.test(e.key)) {
+          e.preventDefault();
+        }
+      }
+    });
+
+    input.addEventListener("beforeinput", (e) => {
+      if (e.data && !/^[a-zA-Z\s]+$/.test(e.data)) {
+        e.preventDefault();
+      }
+    });
+
+    input.addEventListener("input", function () {
+      const cleaned = this.value.replace(/[^a-zA-Z\s]/g, "");
+      if (this.value !== cleaned) {
+        this.value = cleaned;
+      }
+    });
+
+    input.addEventListener("paste", function (e) {
+      e.preventDefault();
+      const text =
+        (e.clipboardData || window.clipboardData).getData("text") || "";
+      const cleaned = text.replace(/[^a-zA-Z\s]/g, "");
+      const start = this.selectionStart || 0;
+      const end = this.selectionEnd || 0;
+      const val = this.value;
+      this.value = val.slice(0, start) + cleaned + val.slice(end);
+      this.setSelectionRange(start + cleaned.length, start + cleaned.length);
+    });
+  }
+
+  function setupNumbersOnlyInput(input) {
+    if (!input) return;
+
+    input.addEventListener("keydown", (e) => {
+      // Allow control/navigation keys
+      if (
+        e.key === "Backspace" ||
+        e.key === "Tab" ||
+        e.key === "Enter" ||
+        e.key === "Escape" ||
+        e.key === "Delete" ||
+        e.key === "ArrowLeft" ||
+        e.key === "ArrowRight" ||
+        e.key === "ArrowUp" ||
+        e.key === "ArrowDown" ||
+        e.key === "Home" ||
+        e.key === "End"
+      ) {
+        return;
+      }
+      // Allow shortcuts (Ctrl+A, Ctrl+C, Ctrl+V, etc.)
+      if (e.ctrlKey || e.metaKey) {
+        return;
+      }
+      // Prevent key if not a digit
+      if (e.key && e.key.length === 1) {
+        if (!/^[0-9]$/.test(e.key)) {
+          e.preventDefault();
+        }
+      }
+    });
+
+    input.addEventListener("beforeinput", (e) => {
+      if (e.data && !/^[0-9]+$/.test(e.data)) {
+        e.preventDefault();
+      }
+    });
+
+    input.addEventListener("input", function () {
+      const cleaned = this.value.replace(/[^0-9]/g, "");
+      if (this.value !== cleaned) {
+        this.value = cleaned;
+      }
+    });
+
+    input.addEventListener("paste", function (e) {
+      e.preventDefault();
+      const text =
+        (e.clipboardData || window.clipboardData).getData("text") || "";
+      const cleaned = text.replace(/[^0-9]/g, "");
+      const start = this.selectionStart || 0;
+      const end = this.selectionEnd || 0;
+      const val = this.value;
+      this.value = val.slice(0, start) + cleaned + val.slice(end);
+      this.setSelectionRange(start + cleaned.length, start + cleaned.length);
+    });
+  }
+
+  // 4. Consultation Booking / Contact Form Handler (Confidential Consultation Request)
   const contactForm = document.getElementById("legalContactForm");
   if (contactForm) {
+    const contactNameInput =
+      document.getElementById("contactName") ||
+      contactForm.querySelector("input[name='fullName']") ||
+      contactForm.querySelector("input[type='text']");
+    if (contactNameInput) {
+      setupAlphabetsOnlyInput(contactNameInput);
+    }
+
+    const contactPhoneInput =
+      document.getElementById("contactPhone") ||
+      contactForm.querySelector("input[name='phone']") ||
+      contactForm.querySelector("input[type='tel']");
+    if (contactPhoneInput) {
+      setupNumbersOnlyInput(contactPhoneInput);
+    }
+
     contactForm.addEventListener("submit", (e) => {
       e.preventDefault();
-      const submitBtn = contactForm.querySelector("button[type='submit']");
-      const originalText = submitBtn ? submitBtn.innerHTML : "Submit";
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin me-2"></i>Verifying Conflict &amp; Encrypting...`;
+      if (!contactForm.checkValidity()) {
+        contactForm.reportValidity();
+        return;
       }
-
-      setTimeout(() => {
-        contactForm.innerHTML = `
-          <div class="alert alert-success p-4 rounded-3 border-gold-glow text-center animate-fade-in" style="background:#071a14; border:1px solid #198754; color:#d1e7dd;">
-            <div class="mb-3"><i class="fa-solid fa-shield-check text-success fa-3x"></i></div>
-            <h4 class="text-white fw-bold mb-2">Consultation Request Securely Logged</h4>
-            <p class="text-white-50 mb-3">Your inquiry has been assigned matter reference <strong>#LC-${Math.floor(100000 + Math.random() * 900000)}</strong>. Our duty solicitor will review your brief under legal professional privilege and contact you within 2 hours at the requested number.</p>
-            <div class="badge bg-gold text-navy px-3 py-2 fw-bold"><i class="fa-solid fa-phone me-2"></i>Urgent Hotline: +91 9876543210</div>
-          </div>
-        `;
-      }, 1200);
+      window.location.href = getUrl("404");
     });
   }
 
@@ -821,47 +961,44 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (heroQuickForm) {
+    const heroNameInput =
+      document.getElementById("heroName") ||
+      heroQuickForm.querySelector("input[name='fullName']") ||
+      heroQuickForm.querySelector("input[type='text']");
+    if (heroNameInput) {
+      setupAlphabetsOnlyInput(heroNameInput);
+    }
+
+    const heroPhoneInput =
+      document.getElementById("heroPhone") ||
+      heroQuickForm.querySelector("input[name='phone']") ||
+      heroQuickForm.querySelector("input[type='tel']");
+    if (heroPhoneInput) {
+      setupNumbersOnlyInput(heroPhoneInput);
+    }
+
     heroQuickForm.addEventListener("submit", (e) => {
       e.preventDefault();
-      const submitBtn =
-        document.getElementById("heroSubmitBtn") ||
-        heroQuickForm.querySelector("button[type='submit']");
-      const urgencyRadio = heroQuickForm.querySelector(
-        'input[name="heroUrgency"]:checked',
-      );
-      const urgencyVal = urgencyRadio ? urgencyRadio.value : "standard";
-
-      let responseTime = "Within 24 Hours";
-      if (urgencyVal === "emergency") {
-        responseTime = "Within 2 Hours (Emergency Injunction)";
-      } else if (urgencyVal === "priority") {
-        responseTime = "Within 6 Hours (Partner Direct)";
+      if (!heroQuickForm.checkValidity()) {
+        heroQuickForm.reportValidity();
+        return;
       }
+      window.location.href = getUrl("404");
+    });
+  }
 
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin me-2"></i>Encrypting Privileged Brief...`;
+  // 5b. Blog Page Subscribe Form Handler
+  const blogSubscribeForm =
+    document.getElementById("blogSubscribeForm") ||
+    document.querySelector(".newsletter-digest-card form");
+  if (blogSubscribeForm) {
+    blogSubscribeForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (!blogSubscribeForm.checkValidity()) {
+        blogSubscribeForm.reportValidity();
+        return;
       }
-
-      setTimeout(() => {
-        heroQuickForm.innerHTML = `
-          <div class="hero-intake-success p-3 rounded-3 text-center animate-fade-in" style="background: rgba(6, 20, 16, 0.95); border: 1px solid rgba(16, 185, 129, 0.4); box-shadow: 0 0 25px rgba(16, 185, 129, 0.2);">
-            <div class="mb-2"><i class="fa-solid fa-shield-check fa-3x" style="color: #10b981;"></i></div>
-            <h5 class="text-white fw-bold mb-1">Privileged Brief Logged</h5>
-            <p class="text-white-50 fs-8 mb-2">Matter Ref: <strong class="text-gold">#SL-${Math.floor(100000 + Math.random() * 900000)}</strong><br>
-            Directly routed to <strong>Hon. Marcus Vance KC</strong> &amp; Holborn Chambers duty counsel.</p>
-            <div class="p-2 mb-3 rounded bg-dark border border-secondary text-white-50 fs-8">
-              <i class="fa-solid fa-clock text-gold me-1"></i> Committed Response: <strong class="text-white">${responseTime}</strong>
-            </div>
-            <div class="d-flex flex-column gap-2">
-              <a href="${getUrl("contact")}" class="btn btn-hero-gold btn-sm py-2 fw-bold text-center justify-content-center">
-                <i class="fa-solid fa-calendar-check me-2"></i>Review Consultation File
-              </a>
-              <span class="text-white-50 fs-8"><i class="fa-solid fa-lock text-gold me-1"></i>Protected by Legal Professional Privilege</span>
-            </div>
-          </div>
-        `;
-      }, 900);
+      window.location.href = getUrl("404");
     });
   }
 

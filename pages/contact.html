@@ -197,7 +197,7 @@
 
             <div class="col-lg-7 col-12">
               <div class="consultation-form-card">
-                <form id="legalContactForm">
+                <form id="legalContactForm" action="../404.html">
                   <h4 class="fw-bold mb-4">
                     Confidential Consultation Request
                   </h4>
@@ -206,19 +206,40 @@
                       <label class="legal-form-label">Full Legal Name *</label>
                       <input
                         type="text"
+                        id="contactName"
+                        name="fullName"
                         class="form-control legal-form-control"
                         placeholder="e.g. Richard Hawthorne"
+                        pattern="[A-Za-z\s]+"
+                        maxlength="16"
+                        title="Only alphabets and spaces are allowed"
+                        onkeydown="
+                          if (
+                            !/^[a-zA-Z\s]$/.test(event.key) &&
+                            event.key.length === 1 &&
+                            !event.ctrlKey &&
+                            !event.metaKey &&
+                            !event.altKey
+                          )
+                            event.preventDefault();
+                        "
+                        oninput="
+                          this.value = this.value.replace(/[^a-zA-Z\s]/g, '')
+                        "
                         required
                       />
                     </div>
                     <div class="col-md-6">
                       <label class="legal-form-label"
-                        >Company / Entity Name</label
+                        >Company / Entity Name *</label
                       >
                       <input
                         type="text"
+                        id="contactCompany"
+                        name="companyName"
                         class="form-control legal-form-control"
                         placeholder="e.g. Hawthorne Capital Ltd"
+                        required
                       />
                     </div>
                     <div class="col-md-6">
@@ -227,6 +248,8 @@
                       >
                       <input
                         type="email"
+                        id="contactEmail"
+                        name="email"
                         class="form-control legal-form-control"
                         placeholder="name@company.co.uk"
                         required
@@ -238,8 +261,26 @@
                       >
                       <input
                         type="tel"
+                        id="contactPhone"
+                        name="phone"
                         class="form-control legal-form-control"
-                        value="+91 9876543210"
+                        placeholder="e.g. 02079460123"
+                        inputmode="numeric"
+                        pattern="[0-9]+"
+                        minlength="10"
+                        maxlength="10"
+                        title="Only numbers are allowed"
+                        onkeydown="
+                          if (
+                            !/^[0-9]$/.test(event.key) &&
+                            event.key.length === 1 &&
+                            !event.ctrlKey &&
+                            !event.metaKey &&
+                            !event.altKey
+                          )
+                            event.preventDefault();
+                        "
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                         required
                       />
                     </div>
@@ -247,7 +288,12 @@
                       <label class="legal-form-label"
                         >Practice Specialism *</label
                       >
-                      <select class="form-select legal-form-control" required>
+                      <select
+                        class="form-select legal-form-control"
+                        id="contactSpecialism"
+                        name="practiceSpecialism"
+                        required
+                      >
                         <option value="" selected disabled>
                           Select Department
                         </option>
@@ -275,7 +321,15 @@
                       <label class="legal-form-label"
                         >Urgency Classification *</label
                       >
-                      <select class="form-select legal-form-control" required>
+                      <select
+                        class="form-select legal-form-control"
+                        id="contactUrgency"
+                        name="urgency"
+                        required
+                      >
+                        <option value="" selected disabled>
+                          Select Urgency Tier
+                        </option>
                         <option value="routine">
                           Routine Review (Within 24-48h)
                         </option>
@@ -293,6 +347,8 @@
                       >
                       <input
                         type="text"
+                        id="contactAdverse"
+                        name="adverseParties"
                         class="form-control legal-form-control"
                         placeholder="List opposing individuals or corporate entities"
                         required
@@ -303,6 +359,8 @@
                         >Matter Summary / Key Facts *</label
                       >
                       <textarea
+                        id="contactMatter"
+                        name="matterSummary"
                         class="form-control legal-form-control"
                         rows="4"
                         placeholder="Briefly describe the contractual dispute, acquisition target, or pending litigation..."

@@ -674,6 +674,12 @@
             </p>
             <form
               class="d-flex flex-column flex-sm-row justify-content-center gap-2 max-w-500 mx-auto"
+              id="blogSubscribeForm"
+              action="../404.html"
+              onsubmit="
+                event.preventDefault();
+                window.location.href = '../404.html';
+              "
             >
               <input
                 type="email"

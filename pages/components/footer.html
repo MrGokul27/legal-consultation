@@ -186,7 +186,17 @@
               Receive curated statutory alerts and landmark High Court analysis
               directly.
             </p>
-            <form class="newsletter-form d-flex gap-2">
+            <form
+              class="newsletter-form d-flex gap-2"
+              id="footerNewsletterForm"
+              onsubmit="
+                event.preventDefault();
+                const inPages = window.location.pathname
+                  .toLowerCase()
+                  .includes('/pages/');
+                window.location.href = inPages ? '../404.html' : '404.html';
+              "
+            >
               <input
                 type="email"
                 class="form-control form-control-sm newsletter-input"
